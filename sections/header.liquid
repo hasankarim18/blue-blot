@@ -9,7 +9,8 @@
               <img
                 src="{{ settings.logo |  image_url  }}"
                 width=""
-                height="">
+                height=""
+              >
             {% else %}
               {{ shop.name }}
             {% endif %}
@@ -18,6 +19,7 @@
 
         <!-- NAVIGATION MENU -->
         <nav class="hidden md:flex space-x-10">
+          {{ section.settings.menu }}
           <div class="relative">
             <a href="#" class="text-base text-gray-500 hover:text-gray-900">Header group</a>
           </div>
@@ -34,9 +36,7 @@
         </nav>
 
         <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
-          <a href="/cart" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
-            Cart
-          </a>
+          <a href="/cart" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900"> Cart </a>
 
           <a class="text-base text-gray-500 hover:text-gray-900">Login</a>
           <a class="text-base text-gray-500 hover:text-gray-900">Register</a>
@@ -47,21 +47,21 @@
 </header>
 
 {% schema %}
-  {
-    "name": "header",
-    "tag": "section",
-    "settings": [
-      {
-        "type": "link_list",
-        "id": "menu",
-        "default": "main-menu",
-        "label": "Header Menu"
-      }
-    ],
-    "presets": [
-      {
-        "name": "header"
-      }
-    ]
-  }
+{
+  "name": "header",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Header Menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "header"
+    }
+  ]
+}
 {% endschema %}
