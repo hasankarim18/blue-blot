@@ -17,4 +17,40 @@
   .pareant-menu-item:hover .child-menu-links {
     display: block;
   }
+
+  .pareant-menu-item:hover .dropdown-icon {
+    @apply rotate-[180deg] transition-all duration-300;
+  }
+  /* badges */
+  /* Badge Base */
+  /* Badge Base */
+  .badge {
+    @apply inline-block border rounded-full font-medium transition;
+  }
+
+  /* Sizes */
+  .badge-sm {
+    @apply px-2 py-1 text-xs;
+  }
+
+  .badge-md {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .badge-lg {
+    @apply px-4 py-2 text-base;
+  }
+
+  /* Types with Darker Colors */
+  .badge-success {
+    @apply bg-green-500 text-white border-green-600 hover:bg-green-700;
+  }
+
+  .badge-error {
+    @apply bg-red-500 text-white border-red-600 hover:bg-red-700;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-500 text-white border-yellow-600 hover:bg-yellow-700;
+  }
 }

@@ -1,4 +1,4 @@
-const initializeRotateOnHover = () => {
+document.addEventListener("DOMContentLoaded", function () {
   // Select all parent elements with the data-rotate-wrapper attribute
   const wrappers = document.querySelectorAll("[data-rotate-wrapper]");
 
@@ -22,7 +22,4 @@ const initializeRotateOnHover = () => {
       });
     }
   });
-};
-
-// Execute the function as soon as the page is loaded
-window.addEventListener("DOMContentLoaded", initializeRotateOnHover);
+});
