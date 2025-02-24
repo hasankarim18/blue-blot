@@ -13,23 +13,29 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {
-        "border_bottom_class": true
-      },
       "blocks": {
         "logo": {
-          "type": "logo"
+          "type": "logo",
+          "settings": {}
         },
         "nav": {
-          "type": "nav"
+          "type": "nav",
+          "settings": {}
         },
         "account": {
-          "type": "account"
+          "type": "account",
+          "settings": {}
         }
       },
-      "block_order": ["logo", "nav", "account"]
+      "block_order": [
+        "logo",
+        "nav",
+        "account"
+      ],
+      "settings": {}
     }
   },
-
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }
