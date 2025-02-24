@@ -7,21 +7,23 @@
     <meta name="description" content="{{ page_description | escape }}">
     <link rel="canonical" href="{{ canonical_url }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-  {{ content_for_header }}
+    {{ content_for_header }}
     <!-- Header hook for plugins -->
     {{ 'tailwind.css' | asset_url | stylesheet_tag }}
     {{ 'application.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'application.js' |  asset_url }}" defer></script>
 
+    {% if settings.favicon != blank %}
+      <link rel="icon" , type="image/png" , href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {% endif %}
+
+    <script src="{{ 'application.js' |  asset_url }}" defer></script>
   </head>
 
   {% comment %} #styles {% endcomment %}
 
-
   <body>
-    {% section "header" %}
+    {% section 'header' %}
     <main role="main">
-
       {{ content_for_layout }}
     </main>
   </body>
