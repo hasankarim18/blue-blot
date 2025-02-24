@@ -4,13 +4,22 @@
       <div class="flex justify-center items-center py-6 md:justify-start md:space-x-10">
         <!-- STORE NAME / STORE LOGO -->
         <div class="flex justify-start lg:flex-1 truncate">
-          <h1 class="text-xl font-bold truncate">STORE NAME</h1>
+          <h1 class="text-xl font-bold truncate">
+            {% if settings.logo != blank %}
+              <img
+                src="{{ settings.logo |  image_url  }}"
+                width=""
+                height="">
+            {% else %}
+              {{ shop.name }}
+            {% endif %}
+          </h1>
         </div>
 
         <!-- NAVIGATION MENU -->
         <nav class="hidden md:flex space-x-10">
           <div class="relative">
-            <a href="#" class="text-base text-gray-500 hover:text-gray-900">Link 1</a>
+            <a href="#" class="text-base text-gray-500 hover:text-gray-900">Header group</a>
           </div>
 
           <div class="relative">
@@ -36,3 +45,23 @@
     </div>
   </div>
 </header>
+
+{% schema %}
+  {
+    "name": "header",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "menu",
+        "default": "main-menu",
+        "label": "Header Menu"
+      }
+    ],
+    "presets": [
+      {
+        "name": "header"
+      }
+    ]
+  }
+{% endschema %}
