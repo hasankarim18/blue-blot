@@ -9,8 +9,7 @@
               <img
                 src="{{ settings.logo |  image_url  }}"
                 width=""
-                height=""
-              >
+                height="">
             {% else %}
               {{ shop.name }}
             {% endif %}
@@ -25,13 +24,13 @@
                 <button type="button" class="inline-flex items-center text-base text-gray-500 hover:text-gray-900">
                   {{ link.title }} +
                 </button>
-                <div class="absolute left-0 top-100% child-menu-links ">
+                <ul class="absolute left-0 top-[100%] child-menu-links ">
                   {% for childlink in link.links %}
-                    <li class="mb-2 border-b-2 p-4 rounded-md bg-gray-200 text-black ">
-                      <a href="{{ childlink.url }}">{{ childlink.title }} </a>
+                    <li class="mb-2  ">
+                      <a class="child-menu-link" href="{{ childlink.url }}">{{ childlink.title }}</a>
                     </li>
                   {% endfor %}
-                </div>
+                </ul>
               </div>
             {% else %}
               <div class="relative">
@@ -42,7 +41,9 @@
         </nav>
 
         <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
-          <a href="/cart" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900"> Cart </a>
+          <a href="/cart" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900">
+            Cart
+          </a>
 
           <a class="text-base text-gray-500 hover:text-gray-900">Login</a>
           <a class="text-base text-gray-500 hover:text-gray-900">Register</a>
@@ -53,21 +54,21 @@
 </header>
 
 {% schema %}
-{
-  "name": "header",
-  "tag": "section",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "default": "main-menu",
-      "label": "Header Menu"
-    }
-  ],
-  "presets": [
-    {
-      "name": "header"
-    }
-  ]
-}
+  {
+    "name": "header",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "menu",
+        "default": "main-menu",
+        "label": "Header Menu"
+      }
+    ],
+    "presets": [
+      {
+        "name": "header"
+      }
+    ]
+  }
 {% endschema %}

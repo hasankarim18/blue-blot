@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .pareant-menu-item {
+  }
+
+  .child-menu-links {
+    @apply border border-b-2 p-4 rounded-md min-w-[200px] hidden;
+  }
+
+  .child-menu-link {
+    @apply w-full border-b-2 p-4 inline-block rounded-md bg-gray-400 text-black font-semibold hover:bg-gray-300 transition-all duration-200;
+  }
+
+  .pareant-menu-item:hover .child-menu-links {
+    display: block;
+  }
+}
