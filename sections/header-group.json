@@ -14,11 +14,22 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": "footer"
-      }
+        "border_bottom_class": true
+      },
+      "blocks": {
+        "logo": {
+          "type": "logo"
+        },
+        "nav": {
+          "type": "nav"
+        },
+        "account": {
+          "type": "account"
+        }
+      },
+      "block_order": ["logo", "nav", "account"]
     }
   },
-  "order": [
-    "header"
-  ]
+
+  "order": ["header"]
 }

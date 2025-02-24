@@ -671,6 +671,10 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.block {
+  display: block;
+}
+
 .flex {
   display: flex;
 }
@@ -685,11 +689,6 @@ video {
 
 .hidden {
   display: none;
-}
-
-.size-6 {
-  width: 1.5rem;
-  height: 1.5rem;
 }
 
 .h-6 {
@@ -748,6 +747,10 @@ video {
 
 .rounded-md {
   border-radius: 0.375rem;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
 }
 
 .bg-white {
