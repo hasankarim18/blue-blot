@@ -1,0 +1,45 @@
+<div class="w-full min-h-screen flex justify-center items-center bg-slate-900 text-white">
+  <div class="p-12">
+    <h2 class="text-center text-4xl">
+      {{ section.settings.heading }}
+    </h2>
+    <div class="mt-4">
+      <a class="text-blue-200 text-2xl hover:text-blue-400 underline block text-center" href="{{ section.settings.link_url  }}">{{ section.settings.link_text
+}}</a>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "404",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Write Heading",
+        "default": "Page not found!!!"
+      },
+      {
+        "type": "text",
+        "id": "link_text",
+        "label": "Link Text",
+        "default": "Back to home"
+      },
+      {
+        "type": "url",
+        "default": "/",
+        "id": "link_url",
+        "label": "Link Url"
+      }
+    ],
+    "presets": [
+      {
+        "name": "404"
+
+      }
+    ]
+  }
+{% endschema %}

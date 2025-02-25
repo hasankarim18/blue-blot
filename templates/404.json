@@ -1,0 +1,11 @@
+{
+  "wrapper": "div#404.not_found[data-not-found]",
+  "name": "404",
+  "sections": {
+    "main": {
+      "type": "404",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
