@@ -13,11 +13,11 @@
     "main": {
       "type": "template-blog",
       "settings": {
-        "banner_image_height": 300,
+        "banner_image_height": 400,
         "banner_image": "shopify://shop_images/pexels-canvastudio-3194521_273555a9-4782-4b64-b270-e4a637372e0a.jpg",
-        "banner_heading": "Banner Heading",
-        "heading_size": "text-5xl",
-        "banner_sub_heading": "Banner Sub Heading"
+        "banner_heading": "Our Latest News",
+        "heading_size": "text-7xl",
+        "banner_sub_heading": "Alway remain upto date."
       }
     }
   },
