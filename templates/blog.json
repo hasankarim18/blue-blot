@@ -1,0 +1,11 @@
+{
+  "name": "Template Blog",
+  "wrapper": "div.template-blog",
+  "sections": {
+    "main": {
+      "type": "template-blog",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

@@ -16,7 +16,9 @@
       "blocks": {
         "logo": {
           "type": "logo",
-          "settings": {}
+          "settings": {
+            "logo_width": 150
+          }
         },
         "nav": {
           "type": "nav",
@@ -29,17 +31,11 @@
           "settings": {}
         }
       },
-      "block_order": [
-        "logo",
-        "nav",
-        "account"
-      ],
+      "block_order": ["logo", "nav", "account"],
       "settings": {
         "header_border_bottom": true
       }
     }
   },
-  "order": [
-    "header"
-  ]
+  "order": ["header"]
 }

@@ -20,8 +20,8 @@
                     {% if settings.logo != blank %}
                       <img
                         src="{{ settings.logo |  image_url  }}"
-                        width="100"
-                        height="100">
+                        width="{{ block.settings.logo_width }}"
+                        height="">
                     {% else %}
                       {{ shop.name }}
                     {% endif %}
@@ -52,7 +52,7 @@
                     </div>
                   {% else %}
                     <div class="relative">
-                      <a href="#" class="text-base text-gray-500 hover:text-gray-900">{{ link.title }}</a>
+                      <a href="{{ link.url }}" class="text-base text-gray-500 hover:text-gray-900">{{ link.title }}</a>
                     </div>
                   {% endif %}
                 {% endfor %}
@@ -99,7 +99,20 @@
       {
         "type": "logo",
         "limit": 1,
-        "name": "Logo"
+        "name": "Logo",
+        "settings": [
+          {
+            "type": "range",
+            "id": "logo_width",
+            "info": "Logo width",
+            "label": "Logo Width",
+            "min": 80,
+            "max": 180,
+            "step": 1,
+            "default": 100
+          }
+
+        ]
       },
       {
         "type": "nav",

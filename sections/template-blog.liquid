@@ -1,0 +1,109 @@
+{%- liquid
+  assign banner_image = ""
+  if section.settings.banner_image != blank
+    assign banner_image = section.settings.banner_image | image_url
+  else
+    assign banner_image = "placeholder-article.jpg" | asset_img_url
+  endif
+
+  assign banner_height = section.settings.banner_image_height
+  assign banner_heading_size = section.settings.heading_size
+-%}
+
+<style>
+  .blog_bg_image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+<section>
+  <div class="my_container">
+    <div class=" blog_bg_image relative" style="background-image:url({{ banner_image }}); min-height:{{ banner_height }}px;">
+      <div class="absolute top-0 left-0 z-10 bg-black bg-opacity-65 w-full h-full "></div>
+      <div class="z-20 relative w-full  h-full">
+        <div style="min-height:{{ banner_height }}px;" class="flex justify-center items-center  flex-col ">
+          <h2 class="{{ banner_heading_size }} text-white text-center">{{ section.settings.banner_heading }}</h2>
+          <p class="text-xl text-blue-200 mt-4 text-center">{{ section.settings.banner_sub_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <ul>
+      {%- for article in blog.articles -%}
+        <li class="mb-4 flex items-start justify-start gap-4 ">
+          <span>
+            {{ forloop.index }}.
+          </span>
+          <span>
+            {{ article.title | link_to: article.url, class: 'text-blue-400 hover:text-blue-600 ' }}
+          </span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "template-blog",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Blog Banner"
+      },
+      {
+        "type": "range",
+        "default": 300,
+        "min": 300,
+        "max": 400,
+        "id": "banner_image_height",
+        "step": 1,
+        "label": "Banner Image Height"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_image",
+        "label": "Banner Image"
+      },
+      {
+        "type": "text",
+        "id": "banner_heading",
+        "label": "Banner Heading",
+        "default": "Banner Heading"
+      },
+      {
+        "type": "select",
+        "id": "heading_size",
+        "label": "Heading Size",
+        "default": "text-5xl",
+        "options": [
+          {
+            "value": "text-3xl",
+            "label": "Small"
+          },
+          {
+            "value": "text-5xl",
+            "label": "Medium"
+          },
+          {
+            "value": "text-7xl",
+            "label": "Large"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "banner_sub_heading",
+        "label": "Banner Sub Heading",
+        "default": "Banner Sub Heading"
+      }
+    ],
+    "presets": [
+      {
+        "name": "template-blog",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}
