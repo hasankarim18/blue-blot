@@ -1,11 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Template Blog",
   "wrapper": "div.template-blog",
   "sections": {
     "main": {
       "type": "template-blog",
-      "settings": {}
+      "settings": {
+        "banner_image_height": 300,
+        "banner_image": "shopify://shop_images/pexels-canvastudio-3194521_273555a9-4782-4b64-b270-e4a637372e0a.jpg",
+        "banner_heading": "Banner Heading",
+        "heading_size": "text-5xl",
+        "banner_sub_heading": "Banner Sub Heading"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
