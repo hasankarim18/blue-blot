@@ -28,6 +28,35 @@
         </div>
       </div>
     </div>
+    {% comment %}  {% endcomment %}
+    <div class="grid mt-10 grid-cols-4">
+      <div class="blog_left h-screen col-span-4 md:col-span-3">
+        {% comment %} #top_blog slider {% endcomment %}
+        <div class="top_blog_slider">top blog slider</div>
+        {% comment %} #latest_post {% endcomment %}
+        <div class="latest_post mt-10">
+
+          {% paginate blog.articles by 3 %}
+            <ul>
+              {% for article in blog.articles -%}
+                <li class="mb-8">
+                  {{ article.title }}</li>
+              {%- endfor %}
+            </ul>
+            <div class="mt-4 flex justify-center">
+              {{- paginate | default_pagination }}</div>
+          {% endpaginate %}
+        </div>
+
+      </div>
+      <div class="blog_right p-4 md:p-8 h-screen col-span-4 md:col-span-1">
+        {% comment %} #blog_tag_filtering  {% endcomment %}
+        {% render 'blog_tag_filtering'
+          , blog: blog %}
+        {% comment %} #popular_blog {% endcomment %}
+        <div class="popular_blog">popular blogs</div>
+      </div>
+    </div>
     <ul>
       {%- for article in blog.articles -%}
         <li class="mb-4 flex items-start justify-start gap-4 ">
