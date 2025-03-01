@@ -1,0 +1,26 @@
+<div class="class grid grid-cols-4 my_container ">
+  <div class="cart_note col-span-3 p-4">
+    <textarea
+      class="border-2 w-full "
+      name=""
+      id="">Notes</textarea>
+  </div>
+  <div class="cart_buy col-span-1 p-4 flex flex-col justify-center items-center">
+    <button
+      type="submit"
+      form="cart"
+      class="px-10 py-4 bg-green-400 hover:bg-green-600 rounded-md"
+      type="submit">Update Cart</button>
+    <button
+      type="submit"
+      id="checkout"
+      class="mt-4 px-10 py-4 bg-black text-white hover:bg-gray-900 rounded-md"
+      name="checkout"
+      {% if cart == empty %}
+      disabled
+      {% endif %}
+      form="cart">
+      {{ 'sections.cart.checkout' | t }}
+    </button>
+  </div>
+</div>

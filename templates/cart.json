@@ -1,0 +1,17 @@
+{
+  "name": "Cart Template",
+  "sections": {
+    "cart_one": {
+      "type": "cart-1",
+      "settings": {
+        "empty_cart_heading": "Your cart is empty!!!",
+        "empty_cart_redirect_link_title": "Continue shopping"
+      }
+    },
+    "cart_footer_one": {
+      "type": "cart-footer-1",
+      "settings": {}
+    }
+  },
+  "order": ["cart_one", "cart_footer_one"]
+}
