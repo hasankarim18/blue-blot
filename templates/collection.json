@@ -1,12 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Collection",
   "sections": {
     "collection_one": {
       "type": "collection-one",
       "settings": {
-        "collection_one_banner_image": ""
+        "collection_one_banner_image": "shopify://shop_images/pexels-jose-martin-segura-benites-1422456152-27035625.jpg"
       }
     }
   },
-  "order": ["collection_one"]
+  "order": [
+    "collection_one"
+  ]
 }
