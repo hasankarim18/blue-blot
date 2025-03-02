@@ -23,13 +23,92 @@
 
     </div>
 
-    <div class="grid">
-      {%- for product in collection.products -%}
-        <li>{{ product.title }}</li>
-      {%- endfor -%}
+    <div class="mt-10">
+      <div class="grid gap-4 grid-cols-1 md:grid-cols-5">
+        <div class="collection_filters col-span-5 md:col-span-1">
+          {% comment %} tag filtering {% endcomment %}
+          <div>
+            {% render 'collection_tag_filtering'
+              , collection: collection %}
+          </div>
+        </div>
+        <div class="col-span-5 md:col-span-4">
+          {% paginate collection.products by 4 %}
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-3">
+              {% for product in collection.products %}
+                <li class="border-2">
+                  {% render 'product-card-1'
+                    , product: product %}
+                </li>
+              {% endfor %}
+            </ul>
+            <div class="flex justify-center my-10">
+              <div class="paginate_default">
+                {{ paginate | default_pagination }}
+              </div>
+            </div>
+          {% endpaginate %}
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<style>
+  /* Parent container */
+  .paginate_default {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Space between items */
+    font-family: Arial
+    , sans-serif;
+  }
+
+  /* Common styles for all child elements */
+  .paginate_default .page,
+  .paginate_default .deco,
+  .paginate_default .next {
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+  }
+
+  /* Current page */
+  .paginate_default .page.current {
+    background-color: #e2e8f0;
+    /* Light gray background */
+    color: #333;
+    font-weight: bold;
+  }
+
+  /* Links inside pages */
+  .paginate_default .page a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Hover effect for pages and next button */
+  .paginate_default .page a:hover,
+  .paginate_default .next a:hover {
+    background-color: #e2e8f0;
+    /* Light gray background on hover */
+  }
+
+  /* Ellipsis (deco) */
+  .paginate_default .deco {
+    color: #666;
+  }
+
+  /* Next button */
+  .paginate_default .next a {
+    color: #333;
+    text-decoration: none;
+  }
+</style>
 
 {% schema %}
   {
