@@ -1,6 +1,22 @@
 <div>
-  <h2>product card one</h2>
   <div>
-    <h2>{{ product.title }}</h2>
+    {% if product.featured_image %}
+      <div class="overflow-hidden">
+        <img
+          src="{{ product.featured_image |  image_url: width:400  }}"
+          class="w-full h-full object-cover hover:scale-105 transition-transform duration-500 "
+          width=""
+          height=""
+          loading="lazy"
+          alt="{{ product.title }}">
+      </div>
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'w-full h-full' }}
+    {% endif %}
+
+  </div>
+  <h2>{{ forloop.index }}{{ product.title }}</h2>
+  <div class="p-4 flex justify-center">
+    <button class="px-4 py-2 bg-gray-700 hover:bg-black rounded-me text-white">view details</button>
   </div>
 </div>
