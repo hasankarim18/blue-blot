@@ -1,0 +1,57 @@
+{%- liquid
+-%}
+
+<section>
+  <div class="my_container">
+    <div class=" relative h-[300px]">
+      <div class="collection_one_banner absolute z-10 w-full h-full top-0 left-0">
+        {% if section.settings.collection_one_banner_image == blank %}
+          {{ 'collection-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+        {%- else -%}
+          <img
+            src="{{ section.settings.collection_one_banner_image | image_url }}"
+            class="w-full h-full object-cover"
+            width=""
+            height=""
+            alt="">
+        {% endif %}
+      </div>
+      <div class="bg_opacity absolute z-20 bg-black bg-opacity-35 w-full h-full top-0 left-0"></div>
+      <div class="relative z-30 flex justify-center items-center h-[300px]">
+        <h2 class="text-center  text-3x  uppercase ">{{ collection.title }}</h2>
+      </div>
+
+    </div>
+
+    <div class="grid">
+      {%- for product in collection.products -%}
+        <li>{{ product.title }}</li>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Collection One",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Collection Page Banner"
+      },
+
+      {
+        "type": "image_picker",
+        "id": "collection_one_banner_image",
+        "label": "Collection one banner image"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection One",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}

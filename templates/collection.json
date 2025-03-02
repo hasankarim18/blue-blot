@@ -1,0 +1,12 @@
+{
+  "name": "Collection",
+  "sections": {
+    "collection_one": {
+      "type": "collection-one",
+      "settings": {
+        "collection_one_banner_image": ""
+      }
+    }
+  },
+  "order": ["collection_one"]
+}
