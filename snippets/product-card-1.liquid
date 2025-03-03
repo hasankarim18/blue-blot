@@ -60,7 +60,7 @@
         {% endif %}
 
       {% else %}
-        <div>
+        <div class="w-full">
           <div class="mb-4">
             {%- for option in product.options_with_values -%}
               <div class="flex gap-2 flex-wrap">
@@ -83,7 +83,7 @@
               </div>
             {%- endfor -%}
           </div>
-          <div>
+          <div class="w-full ">
             <a href="{{ product.url }}" class="px-4 block w-full text-center py-2 bg-gray-700 hover:bg-black capitalize rounded-md text-white">view details</a>
           </div>
         </div>
