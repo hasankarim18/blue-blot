@@ -13,8 +13,18 @@
       "type": "collection-one",
       "settings": {
         "collection_one_banner_image": "shopify://shop_images/pexels-jose-martin-segura-benites-1422456152-27035625.jpg",
-        "add_to_cart_type": "api"
-      }
+        "add_to_cart_type": "api",
+        "number_of_products": 22
+      },
+      "blocks": {
+        "tag_filter": {
+          "type": "tag_filter"
+        },
+        "other": {
+          "type": "other_filter"
+        }
+      },
+      "block_order": ["other", "tag_filter"]
     }
   },
   "order": ["collection_one"]

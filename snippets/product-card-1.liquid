@@ -60,7 +60,32 @@
         {% endif %}
 
       {% else %}
-        <a href="{{ product.url }}" class="px-4 w-full text-center py-2 bg-gray-700 hover:bg-black rounded-md text-white">view details</a>
+        <div>
+          <div class="mb-4">
+            {%- for option in product.options_with_values -%}
+              <div class="flex gap-2 flex-wrap">
+                {{ option.name }}:
+                {% for value in option.values %}
+                  {%- if value.swatch.image -%}
+                    <img
+                      src="{{ value.swatch.image |  image_url: width:200  }}"
+                      class="w-[30px] h-[30px] rounded-full"
+                      width=""
+                      height="">
+                  {%- elsif value.swatch.color -%}
+                    <span class="w-[20px] block h-[20px] rounded-full mr-2" style="background: {{value.swatch.color}};"></span>
+                  {%- else -%}
+                    <span class="w-9 h-9 flex justify-center items-center border border-violet-800 capitalize">
+                      {{ value.name }}</span>
+                  {%- endif -%}
+                {% endfor %}
+              </div>
+            {%- endfor -%}
+          </div>
+          <div>
+            <a href="{{ product.url }}" class="px-4 w-full text-center py-2 bg-gray-700 hover:bg-black capitalize rounded-md text-white">view details</a>
+          </div>
+        </div>
       {% endif %}
 
     </div>

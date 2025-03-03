@@ -27,13 +27,25 @@
       <div class="grid gap-4 grid-cols-1 md:grid-cols-5">
         <div class="collection_filters col-span-5 md:col-span-1">
           {% comment %} tag filtering {% endcomment %}
-          <div>
-            {% render 'collection_tag_filtering'
-              , collection: collection %}
-          </div>
+          {% for block in section.blocks %}
+            {%- case block.type -%}
+              {%- when 'tag_filter' -%}
+                <div class="mb-4">
+                  {% render 'collection_tag_filtering'
+                    , collection: collection %}
+                </div>
+              {%- when 'other_filter' -%}
+                <div class="border-2 mb-4 rounded-lg p-4">
+                  other filter
+                </div>
+              {%- else -%}
+                <div></div>
+            {%- endcase -%}
+          {% endfor %}
+
         </div>
         <div class="col-span-5 md:col-span-4">
-          {% paginate collection.products by 4 %}
+          {% paginate collection.products by section.settings.number_of_products %}
             <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-3">
               {% for product in collection.products %}
                 <li class="">
@@ -57,7 +69,6 @@
     </div>
   </div>
 </section>
-
 <style></style>
 
 {% schema %}
@@ -89,6 +100,28 @@
             "value": "api"
           }
         ]
+      },
+      {
+        "type": "range",
+        "default": 3,
+        "id": "number_of_products",
+        "label": "Number of products per page",
+        "max": 30,
+        "min": 3,
+        "step": 1
+      }
+
+    ],
+    "blocks": [
+      {
+        "type": "tag_filter",
+        "limit": 1,
+        "name": "Tag Filter"
+      },
+      {
+        "type": "other_filter",
+        "limit": 1,
+        "name": "Other Filter"
       }
     ],
     "presets": [
