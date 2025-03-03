@@ -74,8 +74,9 @@
                       height="">
                   {%- elsif value.swatch.color -%}
                     <span class="w-[20px] block h-[20px] rounded-full mr-2" style="background: {{value.swatch.color}};"></span>
+
                   {%- else -%}
-                    <span class="w-9 h-9 flex justify-center items-center border border-violet-800 capitalize">
+                    <span class=" px-2 py-1 flex justify-center items-center border border-violet-800 capitalize">
                       {{ value.name }}</span>
                   {%- endif -%}
                 {% endfor %}
@@ -83,7 +84,7 @@
             {%- endfor -%}
           </div>
           <div>
-            <a href="{{ product.url }}" class="px-4 w-full text-center py-2 bg-gray-700 hover:bg-black capitalize rounded-md text-white">view details</a>
+            <a href="{{ product.url }}" class="px-4 block w-full text-center py-2 bg-gray-700 hover:bg-black capitalize rounded-md text-white">view details</a>
           </div>
         </div>
       {% endif %}
