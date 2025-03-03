@@ -1,10 +1,10 @@
-<div>
+<div class="border rounded-md p-4">
   <div>
     {% if product.featured_image %}
       <div class="overflow-hidden">
         <img
           src="{{ product.featured_image |  image_url: width:400  }}"
-          class="w-full h-full object-cover hover:scale-105 transition-transform duration-500 "
+          class="w-full h-full object-cover hover:scale-105 transition-transform duration-500 rounded-md rounded-b-none "
           width=""
           height=""
           loading="lazy"
@@ -15,8 +15,54 @@
     {% endif %}
 
   </div>
-  <h2>{{ forloop.index }}{{ product.title }}</h2>
-  <div class="p-4 flex justify-center">
-    <button class="px-4 py-2 bg-gray-700 hover:bg-black rounded-me text-white">view details</button>
+  <div class="bg-violet-100 p-4 rounded-b-md">
+    <h2 class="text-sm font-semibold">{{ product.title }}</h2>
+    {% assign min_price = product.variants | map: 'price' | sort | first %}
+    {% assign max_price = product.variants | map: 'price' | sort | last %}
+
+
+    <h3 class="text-xl font-bold">
+      {% if min_price == max_price %}
+        <span class="price">{{ min_price | money }}</span>
+      {% else %}
+        <span class="price-range">{{ min_price | money }} - {{ max_price | money }}</span>
+      {% endif %}
+      <span class="text-sm line-through">{{ product.compare_at_price | money }}</span>
+    </h3>
+    <div class=" flex justify-center mt-2">
+      {% if product.has_only_default_variant %}
+        {% if section.settings.add_to_cart_type == 'form' %}
+          <form
+            class="w-full"
+            method="post"
+            action="/cart/add">
+            <input
+              type="hidden"
+              name="id"
+              value="{{ product.variants.first.id }}" />
+            <input
+              type="hidden"
+              min="1"
+              type="number"
+              id="quantity"
+              name="quantity"
+              value="1" />
+            <input
+              type="submit"
+              value="Add to cart"
+              class="px-4 w-full cursor-pointer text-center py-2 bg-green-700 hover:bg-green-900 rounded-md text-white" />
+          </form>
+        {% elsif section.settings.add_to_cart_type == 'api' %}
+          <button
+            data-variant-id="{{ product.variants.first.id }}"
+            data-product-card-id="{{product.id}}"
+            class=" bg-violet-700 hover:bg-violet-900  text-white btn-full">Add to cart</button>
+        {% endif %}
+
+      {% else %}
+        <a href="{{ product.url }}" class="px-4 w-full text-center py-2 bg-gray-700 hover:bg-black rounded-md text-white">view details</a>
+      {% endif %}
+
+    </div>
   </div>
 </div>

@@ -12,11 +12,10 @@
     "collection_one": {
       "type": "collection-one",
       "settings": {
-        "collection_one_banner_image": "shopify://shop_images/pexels-jose-martin-segura-benites-1422456152-27035625.jpg"
+        "collection_one_banner_image": "shopify://shop_images/pexels-jose-martin-segura-benites-1422456152-27035625.jpg",
+        "add_to_cart_type": "api"
       }
     }
   },
-  "order": [
-    "collection_one"
-  ]
+  "order": ["collection_one"]
 }

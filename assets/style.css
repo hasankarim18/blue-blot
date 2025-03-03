@@ -1,2 +1,51 @@
-.dropdown-icon {
+/* Parent container */
+.paginate_default {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* Space between items */
+  font-family: Arial, sans-serif;
+}
+
+/* Common styles for all child elements */
+.paginate_default .page,
+.paginate_default .deco,
+.paginate_default .next {
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Current page */
+.paginate_default .page.current {
+  background-color: #e2e8f0;
+  /* Light gray background */
+  color: #333;
+  font-weight: bold;
+}
+
+/* Links inside pages */
+.paginate_default .page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Hover effect for pages and next button */
+.paginate_default .page a:hover,
+.paginate_default .next a:hover {
+  background-color: #e2e8f0;
+  /* Light gray background on hover */
+}
+
+/* Ellipsis (deco) */
+.paginate_default .deco {
+  color: #666;
+}
+
+/* Next button */
+.paginate_default .next a {
+  color: #333;
+  text-decoration: none;
 }
