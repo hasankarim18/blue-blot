@@ -19,9 +19,120 @@
           </div>
         </div>
         <div class="col-span-2">
-          {{ product.title }}
+         {% comment %} #product blocks {% endcomment %}
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when '@app' %}
+                {% render block %}
+              {% when 'is_available' %}
+                <div class="text-left">
+                  {% if product.available %}
+                    <p class="text-xs">Available</p>
+                  {% endif %}
+                </div>
+              {% when 'category' %}
+              <div>  category</div>
+              {% when 'collections' %}
+               <div> collections </div>
+              {% when 'price' %}
+              <div>  price </div>
+              {% when 'content' %}
+                <div>content</div>
+              {% when 'created_at' %}
+                <div>created at</div>
+              {% when 'option' %}
+                <div>options</div>
+              {% when 'options_by_name' %}
+                <div>options by name</div>
+              {% when 'options_with_values' %}
+                <div>optins with values</div>
+              {% when 'metafields' %}
+                <div> metafields</div>
+              {% when 'tags' %}
+                <div>tags</div>
+                
+              {% else %}
+                <div></div>
+            {% endcase %}
+          {% endfor %}
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
+{% schema %}
+  {
+    "name": "Product template 1",
+    "tag": "section",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "@app"
+      },
+      {
+        "type": "is_available",
+        "name":"Is product available",
+        "limit": 1
+      },
+      {
+        "type": "category",
+        "name":"Product category",
+        "limit": 1
+      },
+      {
+        "type": "collections",
+        "name":"collections product have",
+        "limit": 1
+      },
+      {
+        "type": "price",
+        "name":"Product Price",
+        "limit": 1
+      },
+      {
+        "type": "content",
+        "name":"Product content",
+        "limit": 1
+      },
+      {
+        "type": "created_at",
+        "limit": 1,
+        "name": "Product created at"
+      },
+      {
+        "type": "option",
+        "name":"Option name",
+        "limit": 1
+      },
+      {
+        "type": "options_by_name",
+        "name":"Option by name",
+        "limit": 1
+      },
+      {
+        "type": "options_with_values",
+        "name":"Options with values",
+        "limit": 1
+      },
+      {
+        "type": "metafields",
+        "name":"Metafields",
+        "limit": 1
+      },
+      {
+        "type": "tags",
+        "name":"Product tags",
+        "limit": 1
+      }
+
+    ],
+    "presets": [
+      {
+        "name": "Product template 1",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}

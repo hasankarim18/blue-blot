@@ -3,7 +3,55 @@
   "sections": {
     "product_template_one": {
       "type": "product-template-1",
-      "settings": {}
+      "settings": {},
+      "blocks": {
+        "is_available": {
+          "type": "is_available"
+        },
+        "category": {
+          "type": "category"
+        },
+        "collections": {
+          "type": "collections"
+        },
+        "price": {
+          "type": "price"
+        },
+        "content": {
+          "type": "content"
+        },
+        "created_at": {
+          "type": "created_at"
+        },
+        "option": {
+          "type": "option"
+        },
+        "options_by_name": {
+          "type": "options_by_name"
+        },
+        "options_with_values": {
+          "type": "options_with_values"
+        },
+        "metafields": {
+          "type": "metafields"
+        },
+        "tags": {
+          "type": "tags"
+        }
+      },
+      "block_order": [
+        "is_available",
+        "category",
+        "collections",
+        "price",
+        "content",
+        "created_at",
+        "option",
+        "options_by_name",
+        "options_with_values",
+        "metafields",
+        "tags"
+      ]
     }
   },
   "order": ["product_template_one"]
