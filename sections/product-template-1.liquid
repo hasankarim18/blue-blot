@@ -1,3 +1,7 @@
+
+{%- assign selected_variant = product.selected_or_first_available_variant
+
+-%}
 <section>
   <div class="my_container">
     <div class="product_page_1">
@@ -24,6 +28,10 @@
             {% case block.type %}
               {% when '@app' %}
                 {% render block %}
+              {% when 'title' %}
+                <div>
+                  <h2 class="text-3xl">{{ product.title }}</h2>
+                </div>
               {% when 'is_available' %}
                 <div class="text-left">
                   {% if product.available %}
@@ -35,7 +43,41 @@
               {% when 'collections' %}
                <div> collections </div>
               {% when 'price' %}
-              <div>  price </div>
+                {% if product.has_only_default_variant %}
+                   <div> {{ selected_variant.price }} </div>
+                   {% else %}
+                    <div id="variant_price" class="flex items-end gap-2">
+                     
+                      {% if product.price_min < product.price_max %}
+                        <span class="text-2xl flex font-semibold">
+                        {{ product.price_min | money }}{% render 'minus', class:'w-8' %}  {{ product.price_max | money }} 
+                       </span>
+                       {% else %}
+                       <span class="text-2xl flex font-semibold">
+                        {{ product.price_min | money }} 
+                       </span>
+                      {% endif %}
+                      
+                     {%- if product.compare_at_price -%}
+                      <span class="line-through" >
+                        {{ product.compare_at_price_max | money }}
+                       </span>
+                     {%- endif -%}
+                    
+                    </div>
+                {% endif %}
+              
+            {% comment %} #variant selector {% endcomment %}
+              {% when 'varaint_selector' %}
+                <div>
+                  {% if block.settings.variant_selector_type == 'select' %}
+                    select type 
+                  {% elsif block.settings.variant_selector_type == 'swatch' %}
+                    swatch
+                  {% endif %}
+
+                </div>
+                  {% comment %} #variant selector end {% endcomment %}
               {% when 'content' %}
                 <div>content</div>
               {% when 'created_at' %}
@@ -72,6 +114,11 @@
         "type": "@app"
       },
       {
+        "type": "title",
+        "name":"Product title",
+        "limit": 1
+      },
+      {
         "type": "is_available",
         "name":"Is product available",
         "limit": 1
@@ -90,6 +137,28 @@
         "type": "price",
         "name":"Product Price",
         "limit": 1
+      },
+      {
+        "type": "varaint_selector",
+        "name":"Variant Selector",
+        "settings": [
+          {
+            "type": "select",
+            "id": "variant_selector_type",
+            "label": "Variant selector type",
+            "default":"select",
+            "options": [
+              {
+                "label": "Select type",
+                "value": "select"
+              },
+              {
+                "label": "Swatch type",
+                "value": "swatch"
+              }
+            ]
+          }
+        ]
       },
       {
         "type": "content",

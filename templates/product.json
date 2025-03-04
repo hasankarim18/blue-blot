@@ -5,6 +5,9 @@
       "type": "product-template-1",
       "settings": {},
       "blocks": {
+        "title": {
+          "type": "title"
+        },
         "is_available": {
           "type": "is_available"
         },
@@ -16,6 +19,12 @@
         },
         "price": {
           "type": "price"
+        },
+        "varaint_selector": {
+          "type": "varaint_selector",
+          "settings": {
+            "variant_selector_type": "select"
+          }
         },
         "content": {
           "type": "content"
@@ -40,10 +49,12 @@
         }
       },
       "block_order": [
+        "title",
         "is_available",
         "category",
         "collections",
         "price",
+        "varaint_selector",
         "content",
         "created_at",
         "option",
