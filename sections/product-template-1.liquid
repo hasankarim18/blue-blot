@@ -1,0 +1,27 @@
+<section>
+  <div class="my_container">
+    <div class="product_page_1">
+      <div class="grid grid-cols-5 my-10 gap-8">
+        {% comment %} #product media {% endcomment %}
+        <div class="col-span-3 ">
+          {% comment %} #feature media {% endcomment %}
+          <div class="feature_media mb-4">
+            {% render 'product-feature-media-template-1'
+              , media: product.featured_media %}
+          </div>
+          {% comment %} # media loop {% endcomment %}
+          <div class=" grid grid-cols-3 gap-2">
+            {% for media in product.media %}
+
+              {% render 'product-media-template-1'
+                , media: media %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-span-2">
+          {{ product.title }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

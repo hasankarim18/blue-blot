@@ -805,6 +805,10 @@ video {
   margin-bottom: 2rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -815,10 +819,6 @@ video {
 
 .mt-4 {
   margin-top: 1rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
 }
 
 .block {
@@ -865,8 +865,16 @@ video {
   height: 150px;
 }
 
+.h-\[20px\] {
+  height: 20px;
+}
+
 .h-\[300px\] {
   height: 300px;
+}
+
+.h-\[30px\] {
+  height: 30px;
 }
 
 .h-\[40px\] {
@@ -879,26 +887,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[50px\] {
-  height: 50px;
-}
-
-.h-\[20px\] {
-  height: 20px;
-}
-
-.h-\[10px\] {
-  height: 10px;
-}
-
-.h-\[30px\] {
-  height: 30px;
-}
-
-.h-9 {
-  height: 2.25rem;
 }
 
 .min-h-\[500px\] {
@@ -925,40 +913,40 @@ video {
   width: 150px;
 }
 
-.w-full {
-  width: 100%;
-}
-
-.w-\[50px\] {
-  width: 50px;
-}
-
 .w-\[20px\] {
   width: 20px;
-}
-
-.w-\[10px\] {
-  width: 10px;
 }
 
 .w-\[30px\] {
   width: 30px;
 }
 
-.w-9 {
-  width: 2.25rem;
+.w-full {
+  width: 100%;
 }
 
 .cursor-pointer {
   cursor: pointer;
 }
 
+.cursor-zoom-in {
+  cursor: zoom-in;
+}
+
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .grid-cols-6 {
@@ -1003,6 +991,10 @@ video {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-8 {
+  gap: 2rem;
 }
 
 .space-x-10 > :not([hidden]) ~ :not([hidden]) {
@@ -1184,9 +1176,19 @@ video {
   padding-right: 2.5rem;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .py-2 {
@@ -1202,16 +1204,6 @@ video {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-}
-
-.px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
 }
 
 .text-left {
