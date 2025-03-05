@@ -15,46 +15,68 @@
           </div>
           {% comment %} # media loop {% endcomment %}
           <div class=" grid grid-cols-3 gap-2">
-            {% for media in product.media %}
+            {% for media in product.media offset: 1 %}
 
               {% render 'product-media-template-1'
                 , media: media %}
             {% endfor %}
           </div>
         </div>
+        {% comment %} #product_info {% endcomment %}
         <div class="col-span-2">
+      
          {% comment %} #product blocks {% endcomment %}
           {% for block in section.blocks %}
             {% case block.type %}
               {% when '@app' %}
+                <div class="">
                 {% render block %}
+                </div>
               {% when 'title' %}
-                <div>
+                <div class="mb-4">
                   <h2 class="text-3xl">{{ product.title }}</h2>
                 </div>
               {% when 'is_available' %}
-                <div class="text-left">
+                <div class="text-left mb-4">
                   {% if product.available %}
-                    <p class="text-xs">Available</p>
+                    <p class="text-xs">
+                      <span>
+                        {% if product.available %}
+                          <span class="badge-success badge-sm rounded-md">Available</span>
+                          {% else %}
+                            <span class="badge-warning badge-sm rounded-md">Out of stock</span>
+                        {% endif %}
+                      </span>
+                    </p>
                   {% endif %}
                 </div>
               {% when 'category' %}
-              <div>  category</div>
+              <div class="mb-4">  
+              Product Category: <span class="badge-sm cursor-pointer badge-info  ">  {{ product.category }}</span>
+              </div>
               {% when 'collections' %}
-               <div> collections </div>
+               <div class="mb-4"> 
+                <div class="flex justify-start">
+                  <span>Available in collections:</span>
+                {% for collection in product.collections %}
+                  <a href="{{ collection.url }}"  class="badge-sm badge-warning mx-1">{{ collection.title }}</a>
+                {% endfor %} 
+                </div>
+               </div>
               {% when 'price' %}
+                <div class="mb-4">
                 {% if product.has_only_default_variant %}
-                   <div> {{ selected_variant.price }} </div>
+                   <div> Price: {{ selected_variant.price | money }} </div>
                    {% else %}
                     <div id="variant_price" class="flex items-end gap-2">
                      
                       {% if product.price_min < product.price_max %}
                         <span class="text-2xl flex font-semibold">
-                        {{ product.price_min | money }}{% render 'minus', class:'w-8' %}  {{ product.price_max | money }} 
+                      Price range:  {{ product.price_min | money }}{% render 'minus', class:'w-8' %}  {{ product.price_max | money }} 
                        </span>
                        {% else %}
                        <span class="text-2xl flex font-semibold">
-                        {{ product.price_min | money }} 
+                       Price range: {{ product.price_min | money }} 
                        </span>
                       {% endif %}
                       
@@ -63,31 +85,109 @@
                         {{ product.compare_at_price_max | money }}
                        </span>
                      {%- endif -%}
-                    
-                    </div>
+                     </div>
+                      <div class="" >
+                        <p class="font-semibold underline">Variant Price: {{ selected_variant.price | money }}</p>
+                      </div>
+                   
                 {% endif %}
-              
+                </div>
             {% comment %} #variant selector {% endcomment %}
               {% when 'varaint_selector' %}
-                <div>
+                <div class="mb-4" >
                   {% if block.settings.variant_selector_type == 'select' %}
                     select type 
                   {% elsif block.settings.variant_selector_type == 'swatch' %}
-                    swatch
+                    <div class="swatch_variant_selector_one my-2">
+                      {% for option in product.options_with_values %}
+                        <div class="mb-4">
+                         <span> {{ option.name }}:</span>
+                        {% for value in option.values %}
+                         <span> 
+                          {{ value }}
+                         </span>
+                        {% endfor %}
+                        </div>
+                      {% endfor %}
+                    </div>
                   {% endif %}
 
                 </div>
                   {% comment %} #variant selector end {% endcomment %}
               {% when 'content' %}
-                <div>content</div>
+                <div class="mb-4">
+                  {{ product.content }}
+                </div>
               {% when 'created_at' %}
-                <div>created at</div>
+                <div class="mb-4 font-semibold">
+                  Product Added At:    {{ product.created_at | date: "%a, %b %d, %y" }}
+                </div>
               {% when 'option' %}
-                <div>options</div>
+                <div class="mb-4" >
+                  <h2 class="text-xl">Availble options</h2>
+                  {% if product.options.size >  1 %}
+                    <ul class="flex gap-2" >
+                      {% for option in product.options %}
+                        <li class="badge-sm badge-info">{{ option }}</li>
+                      {% endfor %}
+                    </ul>  
+                    {% else %}                      
+                    <span class="badge-sm badge-info">Options not available</span>
+                  {% endif %}
+                 
+                </div>
               {% when 'options_by_name' %}
-                <div>options by name</div>
+                <div class="mb-4" >
+                  <h2 class="text-xl font-semibold">Option by name</h2>
+                  <div class= >
+                    <div class="mb-1" >
+                    <label>
+                      Color:
+                      <select class="p-2 border-2" >
+                        {%- for value in product.options_by_name['color'].values %}
+                        <option>{{ value }}</option>
+                        {%- endfor %}
+                      </select>
+                    </label>
+                  </div>
+                  {% comment %} option 2 {% endcomment %}
+                  <div class="mb-1" >
+                    <label>
+                      Size:
+                      <select class="p-2 border-2" >
+                        {%- for value in product.options_by_name['size'].values %}
+                        <option>{{ value }}</option>
+                        {%- endfor %}
+                      </select>
+                    </label>
+                  </div>
+                  </div>
+                </div>
               {% when 'options_with_values' %}
-                <div>optins with values</div>
+                <div class="mb-4">
+                  <h2 class="text-xl font-semibold">
+                    Options with values
+                  </h2>
+                  <div>
+                    <ul>
+                      {% for option in product.options_with_values %}
+                        <li>
+                          {{ option.name }}
+                          {% for value in option.values %}
+                            <label for="">
+                              <input type="radio" value="">
+                              {% if value.swatch %}
+                                swatch
+                                {%- else -%}
+                                  {{ value.name }}
+                              {% endif %}
+                            </label>
+                          {% endfor %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
               {% when 'metafields' %}
                 <div> metafields</div>
               {% when 'tags' %}
