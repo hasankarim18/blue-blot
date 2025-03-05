@@ -46,6 +46,9 @@
         },
         "tags": {
           "type": "tags"
+        },
+        "r_collection_lists": {
+          "type": "r_collection_lists"
         }
       },
       "block_order": [
@@ -61,7 +64,8 @@
         "options_by_name",
         "options_with_values",
         "metafields",
-        "tags"
+        "tags",
+        "r_collection_lists"
       ]
     }
   },

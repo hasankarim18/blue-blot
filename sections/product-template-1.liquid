@@ -137,31 +137,37 @@
                  
                 </div>
               {% when 'options_by_name' %}
-                <div class="mb-4" >
+               <div class="mb-4">
                   <h2 class="text-xl font-semibold">Option by name</h2>
-                  <div class= >
-                    <div class="mb-1" >
-                    <label>
-                      Color:
-                      <select class="p-2 border-2" >
-                        {%- for value in product.options_by_name['color'].values %}
-                        <option>{{ value }}</option>
-                        {%- endfor %}
-                      </select>
-                    </label>
-                  </div>
+                  {% if product.options_by_name['color'] %}
+                    <div >
+                      <div class="mb-1" >
+                      <label>
+                        Color:
+                        <select class="p-2 border-2" >
+                          {%- for value in product.options_by_name['color'].values %}
+                          <option>{{ value }}</option>
+                          {%- endfor %}
+                        </select>
+                      </label>
+                    </div>
+                    </div>
+                  {% endif %}
+                 
                   {% comment %} option 2 {% endcomment %}
-                  <div class="mb-1" >
+                   {% if product.options_by_name['size'] %}
+                    <div class="mb-1" >
                     <label>
                       Size:
                       <select class="p-2 border-2" >
                         {%- for value in product.options_by_name['size'].values %}
-                        <option>{{ value }}</option>
+                        <option>{{ value.name }}</option>
                         {%- endfor %}
                       </select>
-                    </label>
+                    </label>                  
                   </div>
-                  </div>
+                   {% endif %}
+                  
                 </div>
               {% when 'options_with_values' %}
                 <div class="mb-4">
@@ -170,29 +176,61 @@
                   </h2>
                   <div>
                     <ul>
+                    {%- unless product.has_only_default_variant -%}
                       {% for option in product.options_with_values %}
-                        <li>
-                          {{ option.name }}
-                          {% for value in option.values %}
-                            <label for="">
-                              <input type="radio" value="">
-                              {% if value.swatch %}
-                                swatch
-                                {%- else -%}
-                                  {{ value.name }}
+                        <li class="">                    
+                           <div> {{ option.name }}:</div>
+                           <div class="flex mt-2" >
+                            {% for value in option.values %}
+                              {% comment %} is color {% endcomment %}
+                              {% if option.name == 'Color' %}
+                                  <label class="flex" for="">                              
+                                  {% if value.swatch %}
+                                    <input hidden type="radio" value="">
+                                      {% if value.swatch.image %}
+                                        <img src="{{ value.swatch.image |  image_url  }}" width="50" height="50" class="rounded-full border-2 ml-2" alt="">
+                                        {%- elsif value.swatch.color -%}
+                                        <span
+                                         class="mr-2 cursor-pointer px-2 py-1 text-white rounded-full"
+                                         style="background: {{ value.swatch.color  }};" 
+                                         data-swatch-color-name="{{ value.swatch.color }}"> {{ value.name  }}</span>
+                                      {% endif %}                                  
+                                    {%- else -%}                                 
+                                  {% endif %}
+                                </label>
+                                {% else %}
+                                <label for="">
+                                  <input type="radio" value="">
+                                  {% if value.swatch %}
+                                   <span> swatch</span>
+                                    {%- else -%}
+                                    <span>  {{ value.name }}</span>
+                                  {% endif %}
+                                </label>
+                                
                               {% endif %}
-                            </label>
-                          {% endfor %}
+                              
+                            {% endfor %}    
+                            </div>                  
+                         
                         </li>
                       {% endfor %}
+                      {% else %}
+                        <div>Product has only one variant</div>
+                        
+                    {%- endunless -%}                     
+                     
                     </ul>
                   </div>
                 </div>
               {% when 'metafields' %}
-                <div> metafields</div>
+                <div> Product metafields</div>
               {% when 'tags' %}
-                <div>tags</div>
-                
+                <div>
+                  {% for tag in product.tags %}
+                    <span class="badge-sm badge-success font-semibold">{{ tag }}</span>
+                  {% endfor %}
+                </div>                
               {% else %}
                 <div></div>
             {% endcase %}
@@ -201,6 +239,37 @@
       </div>
     </div>
   </div>
+  {% comment %} #manual metafields situated in blocks {% endcomment %}
+   <div class="my_container  my-10 " >
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'r_collection_lists' %}
+            <div class="mb-10">
+              <div class="mb-4"> Recomended collection lists </div>   
+                    
+              <ul class="flex flex-wrap  justify-evenly  w-full" >
+                {% for collection in product.metafields.custom.recomended_collection_lists.value %}             
+                <li class="max-w-[394px] w-full border-2 mb-2">
+                  <h2 class="text-sm font-semibold">
+                    {{ collection.title }}
+                  </h2>
+                </li>
+                
+                {% endfor %}
+              </ul>
+            </div>
+          {% when 'r_collection' %}
+            <div class="mb-10">Recomended collection </div>
+          {% when 'related_products' %}
+            <div class="mb-10">Related products</div>
+            {%  when 'featured_product' %} 
+              <div class="mb-10"> Featred Product</div>
+            
+          {% else %}
+            
+        {% endcase %}
+      {% endfor %}
+   </div>
 </section>
 
 
@@ -294,8 +363,23 @@
         "type": "tags",
         "name":"Product tags",
         "limit": 1
+      },
+      {
+        "type": "r_collection_lists",
+        "name":"*R. Collection List"        
+      },
+      {
+        "type": "r_collection",
+        "name":"*Recomended Collecton"        
+      },
+      {
+        "type": "related_products",
+        "name":"*Related Products"        
+      },
+      {
+        "type": "featured_product",
+        "name":"*Featured Product"
       }
-
     ],
     "presets": [
       {
