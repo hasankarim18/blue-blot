@@ -1,8 +1,6 @@
-
 {%- assign selected_variant = product.selected_or_first_available_variant
-
 -%}
-<section>
+  <section>
   <div class="my_container">
     <div class="product_page_1">
       <div class="grid grid-cols-5 my-10 gap-8">
@@ -24,13 +22,13 @@
         </div>
         {% comment %} #product_info {% endcomment %}
         <div class="col-span-2">
-      
-         {% comment %} #product blocks {% endcomment %}
+
+          {% comment %} #product blocks {% endcomment %}
           {% for block in section.blocks %}
             {% case block.type %}
               {% when '@app' %}
                 <div class="">
-                {% render block %}
+                  {% render block %}
                 </div>
               {% when 'title' %}
                 <div class="mb-4">
@@ -43,131 +41,137 @@
                       <span>
                         {% if product.available %}
                           <span class="badge-success badge-sm rounded-md">Available</span>
-                          {% else %}
-                            <span class="badge-warning badge-sm rounded-md">Out of stock</span>
+                        {% else %}
+                          <span class="badge-warning badge-sm rounded-md">Out of stock</span>
                         {% endif %}
                       </span>
                     </p>
                   {% endif %}
                 </div>
               {% when 'category' %}
-              <div class="mb-4">  
-              Product Category: <span class="badge-sm cursor-pointer badge-info  ">  {{ product.category }}</span>
-              </div>
-              {% when 'collections' %}
-               <div class="mb-4"> 
-                <div class="flex justify-start">
-                  <span>Available in collections:</span>
-                {% for collection in product.collections %}
-                  <a href="{{ collection.url }}"  class="badge-sm badge-warning mx-1">{{ collection.title }}</a>
-                {% endfor %} 
+                <div class="mb-4">
+                  Product Category:
+                  <span class="badge-sm cursor-pointer badge-info  ">
+                    {{ product.category }}</span>
                 </div>
-               </div>
+              {% when 'collections' %}
+                <div class="mb-4">
+                  <div class="flex justify-start">
+                    <span>Available in collections:</span>
+                    {% for collection in product.collections %}
+                      <a href="{{ collection.url }}" class="badge-sm badge-warning mx-1">{{ collection.title }}</a>
+                    {% endfor %}
+                  </div>
+                </div>
               {% when 'price' %}
                 <div class="mb-4">
-                {% if product.has_only_default_variant %}
-                   <div> Price: {{ selected_variant.price | money }} </div>
-                   {% else %}
+                  {% if product.has_only_default_variant %}
+                    <div>
+                      Price: {{ selected_variant.price | money }}
+                    </div>
+                  {% else %}
                     <div id="variant_price" class="flex items-end gap-2">
-                     
+
                       {% if product.price_min < product.price_max %}
                         <span class="text-2xl flex font-semibold">
-                      Price range:  {{ product.price_min | money }}{% render 'minus', class:'w-8' %}  {{ product.price_max | money }} 
-                       </span>
-                       {% else %}
-                       <span class="text-2xl flex font-semibold">
-                       Price range: {{ product.price_min | money }} 
-                       </span>
+                          Price range: {{ product.price_min | money }}{% render 'minus'
+  , class: 'w-8' %} {{ product.price_max | money }}
+                        </span>
+                      {% else %}
+                        <span class="text-2xl flex font-semibold">
+                          Price range: {{ product.price_min | money }}
+                        </span>
                       {% endif %}
-                      
-                     {%- if product.compare_at_price -%}
-                      <span class="line-through" >
-                        {{ product.compare_at_price_max | money }}
-                       </span>
-                     {%- endif -%}
-                     </div>
-                      <div class="" >
-                        <p class="font-semibold underline">Variant Price: {{ selected_variant.price | money }}</p>
-                      </div>
-                   
-                {% endif %}
+
+                      {%- if product.compare_at_price -%}
+                        <span class="line-through">
+                          {{ product.compare_at_price_max | money }}
+                        </span>
+                      {%- endif -%}
+                    </div>
+                    <div class="">
+                      <p class="font-semibold underline">Variant Price: {{ selected_variant.price | money }}</p>
+                    </div>
+
+                  {% endif %}
                 </div>
-            {% comment %} #variant selector {% endcomment %}
+              {% comment %} #variant selector {% endcomment %}
               {% when 'varaint_selector' %}
-                <div class="mb-4" >
+                <div class="mb-4">
                   {% if block.settings.variant_selector_type == 'select' %}
-                    select type 
+                    select type
                   {% elsif block.settings.variant_selector_type == 'swatch' %}
                     <div class="swatch_variant_selector_one my-2">
                       {% for option in product.options_with_values %}
                         <div class="mb-4">
-                         <span> {{ option.name }}:</span>
-                        {% for value in option.values %}
-                         <span> 
-                          {{ value }}
-                         </span>
-                        {% endfor %}
+                          <span>
+                            {{ option.name }}:</span>
+                          {% for value in option.values %}
+                            <span>
+                              {{ value }}
+                            </span>
+                          {% endfor %}
                         </div>
                       {% endfor %}
                     </div>
                   {% endif %}
 
                 </div>
-                  {% comment %} #variant selector end {% endcomment %}
+              {% comment %} #variant selector end {% endcomment %}
               {% when 'content' %}
                 <div class="mb-4">
                   {{ product.content }}
                 </div>
               {% when 'created_at' %}
                 <div class="mb-4 font-semibold">
-                  Product Added At:    {{ product.created_at | date: "%a, %b %d, %y" }}
+                  Product Added At: {{ product.created_at | date: "%a, %b %d, %y" }}
                 </div>
               {% when 'option' %}
-                <div class="mb-4" >
+                <div class="mb-4">
                   <h2 class="text-xl">Availble options</h2>
-                  {% if product.options.size >  1 %}
-                    <ul class="flex gap-2" >
+                  {% if product.options.size > 1 %}
+                    <ul class="flex gap-2">
                       {% for option in product.options %}
                         <li class="badge-sm badge-info">{{ option }}</li>
                       {% endfor %}
-                    </ul>  
-                    {% else %}                      
+                    </ul>
+                  {% else %}
                     <span class="badge-sm badge-info">Options not available</span>
                   {% endif %}
-                 
+
                 </div>
               {% when 'options_by_name' %}
-               <div class="mb-4">
+                <div class="mb-4">
                   <h2 class="text-xl font-semibold">Option by name</h2>
                   {% if product.options_by_name['color'] %}
-                    <div >
-                      <div class="mb-1" >
+                    <div>
+                      <div class="mb-1">
+                        <label>
+                          Color:
+                          <select class="p-2 border-2">
+                            {%- for value in product.options_by_name['color'].values %}
+                              <option>{{ value }}</option>
+                            {%- endfor %}
+                          </select>
+                        </label>
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% comment %} option 2 {% endcomment %}
+                  {% if product.options_by_name['size'] %}
+                    <div class="mb-1">
                       <label>
-                        Color:
-                        <select class="p-2 border-2" >
-                          {%- for value in product.options_by_name['color'].values %}
-                          <option>{{ value }}</option>
+                        Size:
+                        <select class="p-2 border-2">
+                          {%- for value in product.options_by_name['size'].values %}
+                            <option>{{ value.name }}</option>
                           {%- endfor %}
                         </select>
                       </label>
                     </div>
-                    </div>
                   {% endif %}
-                 
-                  {% comment %} option 2 {% endcomment %}
-                   {% if product.options_by_name['size'] %}
-                    <div class="mb-1" >
-                    <label>
-                      Size:
-                      <select class="p-2 border-2" >
-                        {%- for value in product.options_by_name['size'].values %}
-                        <option>{{ value.name }}</option>
-                        {%- endfor %}
-                      </select>
-                    </label>                  
-                  </div>
-                   {% endif %}
-                  
+
                 </div>
               {% when 'options_with_values' %}
                 <div class="mb-4">
@@ -176,61 +180,75 @@
                   </h2>
                   <div>
                     <ul>
-                    {%- unless product.has_only_default_variant -%}
-                      {% for option in product.options_with_values %}
-                        <li class="">                    
-                           <div> {{ option.name }}:</div>
-                           <div class="flex mt-2" >
-                            {% for value in option.values %}
-                              {% comment %} is color {% endcomment %}
-                              {% if option.name == 'Color' %}
-                                  <label class="flex" for="">                              
-                                  {% if value.swatch %}
-                                    <input hidden type="radio" value="">
+                      {%- unless product.has_only_default_variant -%}
+                        {% for option in product.options_with_values %}
+                          <li class="">
+                            <div>
+                              {{ option.name }}:</div>
+                            <div class="flex mt-2">
+                              {% for value in option.values %}
+                                {% comment %} is color {% endcomment %}
+                                {% if option.name == 'Color' %}
+                                  <label class="flex" for="">
+                                    {% if value.swatch %}
+                                      <input
+                                        hidden
+                                        type="radio"
+                                        value="">
                                       {% if value.swatch.image %}
-                                        <img src="{{ value.swatch.image |  image_url  }}" width="50" height="50" class="rounded-full border-2 ml-2" alt="">
-                                        {%- elsif value.swatch.color -%}
+                                        <img
+                                          src="{{ value.swatch.image |  image_url  }}"
+                                          width="50"
+                                          height="50"
+                                          class="rounded-full border-2 ml-2"
+                                          alt="">
+                                      {%- elsif value.swatch.color -%}
                                         <span
-                                         class="mr-2 cursor-pointer px-2 py-1 text-white rounded-full"
-                                         style="background: {{ value.swatch.color  }};" 
-                                         data-swatch-color-name="{{ value.swatch.color }}"> {{ value.name  }}</span>
-                                      {% endif %}                                  
-                                    {%- else -%}                                 
-                                  {% endif %}
-                                </label>
-                                {% else %}
-                                <label for="">
-                                  <input type="radio" value="">
-                                  {% if value.swatch %}
-                                   <span> swatch</span>
+                                          class="mr-2 cursor-pointer px-2 py-1 text-white rounded-full"
+                                          style="background: {{ value.swatch.color  }};"
+                                          data-swatch-color-name="{{ value.swatch.color }}">
+                                          {{ value.name }}</span>
+                                      {% endif %}
                                     {%- else -%}
-                                    <span>  {{ value.name }}</span>
-                                  {% endif %}
-                                </label>
-                                
-                              {% endif %}
-                              
-                            {% endfor %}    
-                            </div>                  
-                         
-                        </li>
-                      {% endfor %}
+                                    {% endif %}
+                                  </label>
+                                {% else %}
+                                  <label for="">
+                                    <input type="radio" value="">
+                                    {% if value.swatch %}
+                                      <span>
+                                        swatch</span>
+                                    {%- else -%}
+                                      <span>
+                                        {{ value.name }}</span>
+                                    {% endif %}
+                                  </label>
+
+                                {% endif %}
+
+                              {% endfor %}
+                            </div>
+
+                          </li>
+                        {% endfor %}
                       {% else %}
                         <div>Product has only one variant</div>
-                        
-                    {%- endunless -%}                     
-                     
+
+                      {%- endunless -%}
+
                     </ul>
                   </div>
                 </div>
               {% when 'metafields' %}
-                <div> Product metafields</div>
+                <div class="mb-10">
+                  Product metafields</div>
               {% when 'tags' %}
-                <div>
+                <div class="mb-10">
+                  <h2 class="text-sm font-semibold">Product Tags</h2>
                   {% for tag in product.tags %}
                     <span class="badge-sm badge-success font-semibold">{{ tag }}</span>
                   {% endfor %}
-                </div>                
+                </div>
               {% else %}
                 <div></div>
             {% endcase %}
@@ -240,152 +258,204 @@
     </div>
   </div>
   {% comment %} #manual metafields situated in blocks {% endcomment %}
-   <div class="my_container  my-10 " >
-      {% for block in section.blocks %}
-        {% case block.type %}
-          {% when 'r_collection_lists' %}
+  <div class="my_container  my-10 ">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'r_collection_lists' %}
+          {% if product.metafields.custom.recomended_collection_lists.value %}
             <div class="mb-10">
-              <div class="mb-4"> Recomended collection lists </div>   
-                    
-              <ul class="flex flex-wrap  justify-evenly  w-full" >
-                {% for collection in product.metafields.custom.recomended_collection_lists.value %}             
-                <li class="max-w-[394px] w-full border-2 mb-2">
-                  <h2 class="text-sm font-semibold">
-                    {{ collection.title }}
-                  </h2>
-                </li>
-                
+              <h2 class="text-2xl font-semibold text-center uppercase mb-4 ">
+                Recomended Collection Lists
+              </h2>
+              <ul class="flex flex-wrap  justify-evenly  w-full">
+                {% for collection in product.metafields.custom.recomended_collection_lists.value %}
+                  <li class="max-w-[394px] w-full  mb-2">
+                    {% render 'collection-cart-one'
+                      , collection: collection %}
+                  </li>
                 {% endfor %}
               </ul>
             </div>
-          {% when 'r_collection' %}
-            <div class="mb-10">Recomended collection </div>
-          {% when 'related_products' %}
-            <div class="mb-10">Related products</div>
-            {%  when 'featured_product' %} 
-              <div class="mb-10"> Featred Product</div>
-            
+          {%- else -%}
+            <div></div>
+          {% endif %}
+
+        {% when 'r_collection' %}
+          {% if product.metafields.custom.recomended_collection.value %}
+            <div class="mb-10">
+              <h2 class="text-2xl font-semibold text-center uppercase mb-4 ">
+                Recomended Collection: "{{ product.metafields.custom.recomended_collection.value.title
+}}"
+              </h2>
+              <ul class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {% for item in product.metafields.custom.recomended_collection.value.products limit: 3 %}
+                  <li>
+                    {% render 'product-card-1'
+                      , product: item %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
           {% else %}
-            
+            <div></div>
+          {% endif %}
+
+        {% when 'related_products' %}
+          {% if product.metafields.custom.recomended_collection.value %}
+            <div class="mb-10">
+              <h2 class="text-2xl font-semibold text-center uppercase mb-4 ">
+                Related Products
+              </h2>
+              <ul class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {% for item in product.metafields.custom.related_products.value limit: 3 %}
+                  <li>
+                    {% render 'product-card-1'
+                      , product: item %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% else %}
+            <div></div>
+          {% endif %}
+
+        {% when 'featured_product' %}
+          {% if product.metafields.custom.recomended_collection.value %}
+            {%- assign f_product = product.metafields.custom.recomended_collection.value -%}
+            <div class="mb-10">
+              <h2 class="text-2xl font-semibold text-center uppercase mb-4 ">
+                Featured Product
+              </h2>
+              {%- assign f_product = product.metafields.custom.featrued_product.value -%}
+              {% render 'featured-product-1'
+                , product: f_product %}
+
+            </div>
+          {% else %}
+            <div></div>
+          {% endif %}
+
+      {% else %}
+
         {% endcase %}
       {% endfor %}
-   </div>
-</section>
+    </div>
+  </section>
 
 
-{% schema %}
-  {
-    "name": "Product template 1",
-    "tag": "section",
-    "settings": [],
-    "blocks": [
-      {
-        "type": "@app"
-      },
-      {
-        "type": "title",
-        "name":"Product title",
-        "limit": 1
-      },
-      {
-        "type": "is_available",
-        "name":"Is product available",
-        "limit": 1
-      },
-      {
-        "type": "category",
-        "name":"Product category",
-        "limit": 1
-      },
-      {
-        "type": "collections",
-        "name":"collections product have",
-        "limit": 1
-      },
-      {
-        "type": "price",
-        "name":"Product Price",
-        "limit": 1
-      },
-      {
-        "type": "varaint_selector",
-        "name":"Variant Selector",
-        "settings": [
-          {
-            "type": "select",
-            "id": "variant_selector_type",
-            "label": "Variant selector type",
-            "default":"select",
-            "options": [
-              {
-                "label": "Select type",
-                "value": "select"
-              },
-              {
-                "label": "Swatch type",
-                "value": "swatch"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "content",
-        "name":"Product content",
-        "limit": 1
-      },
-      {
-        "type": "created_at",
-        "limit": 1,
-        "name": "Product created at"
-      },
-      {
-        "type": "option",
-        "name":"Option name",
-        "limit": 1
-      },
-      {
-        "type": "options_by_name",
-        "name":"Option by name",
-        "limit": 1
-      },
-      {
-        "type": "options_with_values",
-        "name":"Options with values",
-        "limit": 1
-      },
-      {
-        "type": "metafields",
-        "name":"Metafields",
-        "limit": 1
-      },
-      {
-        "type": "tags",
-        "name":"Product tags",
-        "limit": 1
-      },
-      {
-        "type": "r_collection_lists",
-        "name":"*R. Collection List"        
-      },
-      {
-        "type": "r_collection",
-        "name":"*Recomended Collecton"        
-      },
-      {
-        "type": "related_products",
-        "name":"*Related Products"        
-      },
-      {
-        "type": "featured_product",
-        "name":"*Featured Product"
-      }
-    ],
-    "presets": [
-      {
-        "name": "Product template 1",
-        "settings": {}
-      }
-    ]
-  }
-{% endschema %}
+  {% schema %}
+    {
+      "name": "Product template 1",
+      "tag": "section",
+      "settings": [],
+      "blocks": [
+        {
+          "type": "@app"
+        },
+        {
+          "type": "title",
+          "name": "Product title",
+          "limit": 1
+        },
+        {
+          "type": "is_available",
+          "name": "Is product available",
+          "limit": 1
+        },
+        {
+          "type": "category",
+          "name": "Product category",
+          "limit": 1
+        },
+        {
+          "type": "collections",
+          "name": "collections product have",
+          "limit": 1
+        },
+        {
+          "type": "price",
+          "name": "Product Price",
+          "limit": 1
+        },
+        {
+          "type": "varaint_selector",
+          "name": "Variant Selector",
+          "settings": [
+            {
+              "type": "select",
+              "id": "variant_selector_type",
+              "label": "Variant selector type",
+              "default": "select",
+              "options": [
+                {
+                  "label": "Select type",
+                  "value": "select"
+                },
+                {
+                  "label": "Swatch type",
+                  "value": "swatch"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "content",
+          "name": "Product content",
+          "limit": 1
+        },
+        {
+          "type": "created_at",
+          "limit": 1,
+          "name": "Product created at"
+        },
+        {
+          "type": "option",
+          "name": "Option name",
+          "limit": 1
+        },
+        {
+          "type": "options_by_name",
+          "name": "Option by name",
+          "limit": 1
+        },
+        {
+          "type": "options_with_values",
+          "name": "Options with values",
+          "limit": 1
+        },
+        {
+          "type": "metafields",
+          "name": "Metafields",
+          "limit": 1
+        },
+        {
+          "type": "tags",
+          "name": "Product tags",
+          "limit": 1
+        },
+        {
+          "type": "r_collection_lists",
+          "name": "*R. Collection List"
+        },
+        {
+          "type": "r_collection",
+          "name": "*Recomended Collecton"
+        },
+        {
+          "type": "related_products",
+          "name": "*Related Products"
+        },
+        {
+          "type": "featured_product",
+          "name": "*Featured Product"
+        }
+      ],
+      "presets": [
+        {
+          "name": "Product template 1",
+          "settings": {}
+        }
+      ]
+    }
+  {% endschema %}

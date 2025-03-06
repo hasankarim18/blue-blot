@@ -49,6 +49,15 @@
         },
         "r_collection_lists": {
           "type": "r_collection_lists"
+        },
+        "r_collection": {
+          "type": "r_collection"
+        },
+        "related_products": {
+          "type": "related_products"
+        },
+        "featured_product": {
+          "type": "featured_product"
         }
       },
       "block_order": [
@@ -65,7 +74,10 @@
         "options_with_values",
         "metafields",
         "tags",
-        "r_collection_lists"
+        "r_collection_lists",
+        "r_collection",
+        "related_products",
+        "featured_product"
       ]
     }
   },

@@ -1,0 +1,13 @@
+{
+  "name": "Homepage",
+  "sections": {
+    "main": {
+      "type": "homepage",
+      "settings": {}
+    },
+    "featured_product": {
+      "type": "featured-product-section-1"
+    }
+  },
+  "order": ["main", "featured_product"]
+}

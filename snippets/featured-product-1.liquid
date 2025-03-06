@@ -1,0 +1,21 @@
+<section class="grid gap-4 grid-cols-1 my_container md:grid-cols-2">
+  <div class="f_p_media">
+    <div>
+      {% render 'product-feature-media-template-1'
+        , media: product.featured_media %}
+    </div>
+    <div class=" grid grid-cols-3 gap-2">
+      {%- render 'product-media-carousal'
+        , product: product -%}
+    </div>
+  </div>
+
+  <div class="f_p_form">
+
+    <div>
+      <h2 class="text-xl">
+        {{ product.title }}
+      </h2>
+    </div>
+  </div>
+</section>

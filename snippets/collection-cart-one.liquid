@@ -1,0 +1,28 @@
+<div class="relative flex flex-col  bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+  <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+    {%- if collection.image -%}
+      <img
+        src="{{ collection.image | image_url }}"
+        width=""
+        height=""
+        alt="card-image" />
+    {%- else -%}
+      {{ 'collection-1' | placeholder_svg_tag }}
+    {%- endif -%}
+
+  </div>
+  <div class="p-4">
+    <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+      {{ collection.title }}
+    </h6>
+
+  </div>
+  <div class="px-4 pb-4 pt-0 mt-2">
+    <a
+      href="{{ collection.url }}"
+      class="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+      type="button">
+      View Collection
+    </a>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<section class="grid my_container gap-4 grid-cols-1 md:grid-cols-2">
+  <div class="f_p_media">
+    {{ section.settings.featured_product }}
+    {%- assign feature_product = all_products[section.settings.featured_product] -%}
+
+
+    {% render 'product-feature-media-template-1'
+      , media: feature_product.featured_media %}
+  </div>
+  <div class="f_p_form">
+
+    <div>
+      <h2 class="text-xl">
+        {{ product.title }}
+      </h2>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Feature P. Section-1",
+    "tag": "section",
+    "settings": [
+      {
+        "type": "product",
+        "id": "featured_product",
+        "label": "Featured Product"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Feature P. Section-1",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}

@@ -14,7 +14,7 @@
     @apply px-4 py-2 rounded-md text-center duration-100 transition-all cursor-pointer;
   }
   .btn-full {
-    @apply px-4 py-2 w-full text-center rounded-md text-center duration-100 transition-all cursor-pointer;
+    @apply px-4 py-2 w-full rounded-md text-center duration-100 transition-all cursor-pointer;
   }
   .pareant-menu-item {
   }
@@ -43,7 +43,7 @@
 
   /* Sizes */
   .badge-sm {
-    @apply px-2 py-1 text-xs rounded-md inline-block border rounded-full font-medium transition;
+    @apply px-2 py-1 text-xs rounded-md inline-block border  font-medium transition;
   }
 
   .badge-md {

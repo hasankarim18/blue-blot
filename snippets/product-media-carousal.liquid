@@ -1,0 +1,6 @@
+<div>
+  {% for media in product.media offset: 1 %}
+    {% render 'product-media-template-1'
+      , media: media %}
+  {% endfor %}
+</div>
