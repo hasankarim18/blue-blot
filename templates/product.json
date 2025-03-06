@@ -103,9 +103,13 @@
         "featured_product"
       ],
       "settings": {}
+    },
+    "feature_product_section": {
+      "type": "featured-product-section-1",
+      "settings": {
+        "featured_product": "mens-black-t-shirt-multicolor-copy"
+      }
     }
   },
-  "order": [
-    "product_template_one"
-  ]
+  "order": ["product_template_one", "feature_product_section"]
 }
