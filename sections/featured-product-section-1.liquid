@@ -1,12 +1,18 @@
-<section class="grid my_container gap-4 grid-cols-1 md:grid-cols-2">
+{%- assign product = all_products[section.settings.featured_product] -%}
+
+
+<section class="grid gap-4 grid-cols-1 my_container md:grid-cols-2 my-10">
   <div class="f_p_media">
-    {{ section.settings.featured_product }}
-    {%- assign feature_product = all_products[section.settings.featured_product] -%}
-
-
-    {% render 'product-feature-media-template-1'
-      , media: feature_product.featured_media %}
+    <div>
+      {% render 'product-feature-media-template-1'
+        , media: product.featured_media %}
+    </div>
+    <div class=" grid grid-cols-3 gap-2">
+      {%- render 'product-media-carousal'
+        , product: product -%}
+    </div>
   </div>
+
   <div class="f_p_form">
 
     <div>
@@ -16,7 +22,6 @@
     </div>
   </div>
 </section>
-
 {% schema %}
   {
     "name": "Feature P. Section-1",
@@ -25,7 +30,8 @@
       {
         "type": "product",
         "id": "featured_product",
-        "label": "Featured Product"
+        "label": "Featured Product",
+        "default": "apple-watch"
       }
     ],
     "presets": [
