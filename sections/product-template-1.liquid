@@ -320,8 +320,9 @@
           {% endif %}
 
         {% when 'featured_product' %}
-          {% if product.metafields.custom.recomended_collection.value %}
-            {%- assign f_product = product.metafields.custom.recomended_collection.value -%}
+         
+          {% if product.metafields.custom.featrued_product.value  %}
+           
             <div class="mb-10">
               <h2 class="text-2xl font-semibold text-center uppercase mb-4 ">
                 Featured Product
