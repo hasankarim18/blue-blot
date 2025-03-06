@@ -1,13 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Homepage",
   "sections": {
     "main": {
       "type": "homepage",
       "settings": {}
     },
     "featured_product": {
-      "type": "featured-product-section-1"
+      "type": "featured-product-section-1",
+      "settings": {
+        "featured_product": "mens-black-t-shirt-multicolor-copy"
+      }
     }
   },
-  "order": ["main", "featured_product"]
+  "order": [
+    "main",
+    "featured_product"
+  ]
 }
