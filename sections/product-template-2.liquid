@@ -1,0 +1,22 @@
+<section class="product_template_2">
+  <div class="grid grid-cols-2 my_container gap-6 py-10">
+    <div class="product_template_2_media">
+      <div class="feature_media mb-4">
+        {% render 'product-feature-media-template-1'
+          , media: product.featured_media %}
+      </div>
+      {% comment %} # media loop {% endcomment %}
+      <div class=" grid grid-cols-3 gap-2">
+        {% for media in product.media offset: 1 %}
+
+          {% render 'product-media-template-1'
+            , media: media %}
+        {% endfor %}
+      </div>
+    </div>
+    <div class="product_template_2_form">
+      prod
+
+    </div>
+  </div>
+</section>
