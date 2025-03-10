@@ -10,8 +10,11 @@
 {
   "sections": {
     "product_template_two": {
-      "type": "product-template-2"
+      "type": "product-template-2",
+      "settings": {}
     }
   },
-  "order": ["product_template_two"]
+  "order": [
+    "product_template_two"
+  ]
 }
