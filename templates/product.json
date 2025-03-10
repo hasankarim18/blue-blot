@@ -15,7 +15,7 @@
         "heading_text_N9T3rq": {
           "type": "heading_text",
           "settings": {
-            "text": "vcxv",
+            "text": "{{ product.title }}",
             "heading_text_align": "left"
           }
         },
