@@ -1,5 +1,9 @@
+{%- liquid
+  assign selected_variant = product.selected_or_first_available_variant
+-%}
+
 <section class="product_template_2">
-  product template 2
+
   <div class="grid grid-cols-2 my_container gap-6 py-10">
     <div class="product_template_2_media">
       <div class="feature_media mb-4">
@@ -16,8 +20,103 @@
       </div>
     </div>
     <div class="product_template_2_form">
-        <div> Product </div>
+      <product-info>
+        <div>
+          {%- form 'product'
+            , product -%}
+            {% comment %} #variant_id {% endcomment %}
+            <input
+            type="number"
+            readonly
+            name="id"
+            class="bg-indigo-100 p-1 rounded-md text-center "
+            value="{{ selected_variant.id }}">
 
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when '@app' %}
+                  {% render block %}
+                {% when 'heading_text' %}
+                  <div class="mb-4">
+                    <h2 style="text-align: {{block.settings.heading_text_align}};" class="text-2xl font-semibold">{{
+                      block.settings.heading_text
+                      }}</h2>
+                  </div>
+
+
+                {% when 'quantity' %}
+                  {% comment %} #product_quantity {% endcomment %}
+                  <div class="mb-4 bg-gray-50 p-2">
+                    Quantity: <input
+                      type="number"
+                      name="quantity"
+                      class="border-2 p-1 rounded-sm text-center text-xl"
+                      min="1"
+                      value="1">
+                  </div>
+                {% when 'cart_action' %}
+                        {% comment %} #add_to_cart {% endcomment %}
+                  <div class="mb-4">
+                    <button type="submit" class="w-full p-4 mb-4 bg-gray-900 cursor-pointer hover:bg-gray-700 duration-75 transition-all text-center text-white">Add to cart</button>
+                    {{ form | payment_button }}
+                  </div>
+                {% else %}
+                  <div></div>
+              {% endcase %}
+            {% endfor %}     
+          {%- endform -%}
+        </div>
+        <div class="mt-10"></div>
+      </product-info>
     </div>
   </div>
 </section>
+
+
+<script src="{{ 'product-script-2.js' |  asset_url }}" defer></script>
+
+{% schema %}
+  {
+    "name": "Product template 2",
+    "tag": "section",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "@app",
+      },
+      {
+        "type": "heading_text",
+        "name":"Heading text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Write heading"
+          },
+          {
+            "type": "text_alignment",
+            "default":"left",
+            "id": "heading_text_align",
+            "label": "Text Align"
+          }
+        ]
+      },
+      {
+        "type": "quantity",
+        "limit": 1,
+        "name": "Quantity"
+      },
+      {
+        "type": "cart_action",
+        "limit": 1,
+        "name": "Cart Action"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product template 2",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}
