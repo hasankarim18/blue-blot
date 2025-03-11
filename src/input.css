@@ -43,7 +43,7 @@
 
   /* Sizes */
   .badge-sm {
-    @apply px-2 py-1 text-xs rounded-md inline-block border  font-medium transition;
+    @apply px-2 py-1 text-xs rounded-md inline-block border  font-medium transition uppercase;
   }
 
   .badge-md {

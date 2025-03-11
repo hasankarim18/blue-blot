@@ -2,9 +2,15 @@
   assign selected_variant = product.selected_or_first_available_variant
 -%}
 
+<style> 
+  .product_template_2_form{
+    height: fit-content;
+  }
+</style>
+
 <section class="product_template_2">
 
-  <div class="grid grid-cols-2 my_container gap-6 py-10">
+  <div class="grid grid-cols-1 md:grid-cols-2 my_container gap-6 py-10">
     <div class="product_template_2_media">
       <div class="feature_media mb-4">
         {% render 'product-feature-media-template-1'
@@ -19,7 +25,7 @@
         {% endfor %}
       </div>
     </div>
-    <div class="product_template_2_form">
+    <div class="product_template_2_form sticky top-5 ">
       <product-info>
         <div>
           {%- form 'product'
@@ -37,13 +43,39 @@
                 {% when '@app' %}
                   {% render block %}
                 {% when 'heading_text' %}
+                  
                   <div class="mb-4">
                     <h2 style="text-align: {{block.settings.heading_text_align}};" class="text-2xl font-semibold">{{
                       block.settings.text
                       }}</h2>
                   </div>
-
-
+                {% when 'vendor' %}
+                    <div class="mb-4">                     
+                      <div class=" text-sm">
+                        <span class="font-semibold">Vendor:</span> <span class="text-sm font-semibold text-indigo-400">{{ product.vendor }}</span>
+                      </div>
+                    </div>
+                {% when 'price' %}
+                  <div class="mb-4 text-sm">
+                    <span class="font-semibold">Price:</span>        
+                    {% if selected_variant.compare_at_price > selected_variant.price %}
+                      <span class="text-sm ml-2 font-semibold line-through text-indigo-400" >                                       
+                        {{
+                          selected_variant.compare_at_price |  money_with_currency
+                        }}
+                      </span>
+                    {% endif %}                               
+                    <span  class="text-2xl ml-2 font-semibold text-indigo-400" >    
+                      {{
+                        selected_variant.price |  money_with_currency
+                      }}
+                    </span>
+                    {% if selected_variant.compare_at_price > selected_variant.price %}
+                      <span class="badge-sm  badge-error" >                                       
+                       sale
+                      </span>
+                    {% endif %}
+                  </div>
                 {% when 'quantity' %}
                   {% comment %} #product_quantity {% endcomment %}
                   <div class="mb-4 bg-gray-50 p-2">
@@ -54,10 +86,51 @@
                       min="1"
                       value="1">
                   </div>
+                  {% comment %} #variant selector {% endcomment %}
+                {% when 'variant_selector' %}
+                  <vaiant-selector data-url="{{ product.url }}" data-section="{{ section.id }}" > 
+                    {%- unless product.has_only_default_variant -%}
+                     <div  class="mb-4  p-2 rounded-sm bg-gray-50 ">  
+                       <h2 class="text-xl mb-2">Select Variant:</h2>                     
+                        {% for option in product.options_with_values %}
+                         <li class="mb-2 grid grid-cols-6 border-2 items-center justify-center rounded-sm" >
+                          <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}" class="font-semibold col-span-1 text-sm md:text-xl p-2 mr-2">
+                            {{ option.name }}:
+                          </label>
+                          <select class="w-full p-2 border-l-2 col-span-5" name="options[{{ option.name |  escape }}]" id="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}">
+                            {% for value in option.values %}
+                              <option 
+                               {% if option.selected_value == value %}
+                                selected
+                               {% endif %}
+                               value="{{ value |  escape }}">{{ value }}</option>
+                            {% endfor %}
+                          </select>
+                         </li>
+                        {% endfor %}
+                     </div>
+                    {%- endunless -%}             
+                  </vaiant-selector>
+                {% comment %} #ddescription {% endcomment %}
+                {% when 'description' %}
+                 <div class="mb-4">
+                  {{ product.description }}
+                 </div>
+                  {% comment %} #cart_action {% endcomment %}
                 {% when 'cart_action' %}
                         {% comment %} #add_to_cart {% endcomment %}
                   <div class="mb-4">
-                    <button type="submit" class="w-full p-4 mb-4 bg-gray-900 cursor-pointer hover:bg-gray-700 duration-75 transition-all text-center text-white">Add to cart</button>
+                    <button
+                    {% unless selected_variant.available %}
+                      disabled
+                     {% endunless %}
+                     type="submit" class="w-full p-4 mb-4 bg-gray-900 cursor-pointer hover:bg-gray-700 duration-75 transition-all text-center text-white">
+                      {% if selected_variant.available  %}
+                       <span> Add to cart </span>
+                        {% else %}
+                          <span>Out of stock</span>
+                      {% endif %}
+                     </button>
                     {{ form | payment_button }}
                   </div>
                 {% else %}
@@ -105,6 +178,26 @@
         "type": "quantity",
         "limit": 1,
         "name": "Quantity"
+      },
+      {
+        "type": "price",
+        "limit": 1,
+        "name": "Price"
+      },
+      {
+        "type": "vendor",
+        "name":"Vendor",
+        "limit": 1
+      },
+      {
+        "type": "variant_selector",
+        "name":"Variant Selector",
+        "limit": 1
+      },
+      {
+        "type": "description",
+        "name":"Description",
+        "limit": 1
       },
       {
         "type": "cart_action",

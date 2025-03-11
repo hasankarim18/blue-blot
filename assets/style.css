@@ -49,3 +49,8 @@
   color: #333;
   text-decoration: none;
 }
+
+button:disabled {
+  background: gray;
+  cursor: not-allowed;
+}

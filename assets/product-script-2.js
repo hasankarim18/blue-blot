@@ -5,7 +5,7 @@ class ProductInfo extends HTMLElement {
   }
 
   initProductInfo() {
-    console.log("product info");
+    // console.log("product info");
   }
 } // product info
 // define custom element
@@ -20,7 +20,14 @@ class VariantSelector extends HTMLElement {
   }
 
   initVariantSelector() {
-    console.log("init variant selector");
+    //  console.log("init variant selector");
+    this.getProductUrl();
+    // console.log(this.productUrl);
+  }
+
+  getProductUrl() {
+    //  this.productUrl = this.getAttribute('data-url')
+    this.productUrl = this.getAttribute("data-url");
   }
 } // vaiant selector
 

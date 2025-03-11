@@ -19,8 +19,22 @@
             "heading_text_align": "left"
           }
         },
+        "vendor": {
+          "type": "vendor"
+        },
+        "price": {
+          "type": "price"
+        },
         "quantity_zR8XYH": {
           "type": "quantity",
+          "settings": {}
+        },
+        "variant_selector": {
+          "type": "variant_selector",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
           "settings": {}
         },
         "cart_action_Xw38bm": {
@@ -30,13 +44,15 @@
       },
       "block_order": [
         "heading_text_N9T3rq",
+        "vendor",
+        "price",
         "quantity_zR8XYH",
+        "variant_selector",
+        "description",
         "cart_action_Xw38bm"
       ],
       "settings": {}
     }
   },
-  "order": [
-    "product_template_two"
-  ]
+  "order": ["product_template_two"]
 }
