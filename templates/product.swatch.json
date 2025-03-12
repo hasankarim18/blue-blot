@@ -54,9 +54,14 @@
         "cart_action_Xw38bm"
       ],
       "settings": {}
+    },
+    "product_template_swatch_CiTePm": {
+      "type": "product-template-swatch",
+      "settings": {}
     }
   },
   "order": [
-    "product_template_two"
+    "product_template_two",
+    "product_template_swatch_CiTePm"
   ]
 }
