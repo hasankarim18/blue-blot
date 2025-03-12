@@ -127,7 +127,7 @@
                 {% when 'cart_action' %}
                         {% comment %} #add_to_cart {% endcomment %}
                  
-                  <div class="mb-4">
+                  <div id="cart_action_{{ section.id }}" class="mb-4">
                     <button
                     {% unless selected_variant.available %}
                       disabled

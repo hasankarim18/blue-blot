@@ -92,7 +92,9 @@ class VariantSelector extends HTMLElement {
     if (!this.currentVariant) return;
 
     const price_id = `price_${this.dataset.section}`;
+    const cart_action_id = `cart_action_${this.dataset.section}`;
     const oldPrice = document.getElementById(price_id);
+    const oldCartAction = document.getElementById(cart_action_id);
 
     // Show spinner
     if (this.spinner) {
@@ -110,11 +112,16 @@ class VariantSelector extends HTMLElement {
       })
       .then((responseText) => {
         const html = new DOMParser().parseFromString(responseText, "text/html");
-
+        // update price
         const newPrice = html.getElementById(price_id);
         if (oldPrice && newPrice) {
           oldPrice.innerHTML = newPrice.innerHTML;
         }
+        // update cart action
+        const newCartAction = html.getElementById(cart_action_id);
+        if (oldCartAction && newCartAction)
+          oldCartAction.innerHTML = newCartAction.innerHTML;
+        // ------------
       })
       .catch((error) => {
         console.error("Error fetching price:", error);
