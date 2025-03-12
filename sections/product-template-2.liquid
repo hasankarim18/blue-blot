@@ -128,18 +128,35 @@
                         {% comment %} #add_to_cart {% endcomment %}
                  
                   <div id="cart_action_{{ section.id }}" class="mb-4">
-                    <button
-                    {% unless selected_variant.available %}
-                      disabled
-                     {% endunless %}
-                     type="submit" class="w-full p-4 mb-4 bg-gray-900 cursor-pointer hover:bg-gray-700 duration-75 transition-all text-center text-white">
-                      {% if selected_variant.available  %}
-                       <span> Add to cart </span>
-                        {% else %}
-                          <span>Out of stock</span>
-                      {% endif %}
-                     </button>
-                    {{ form | payment_button }}
+                    {%- assign invertory_count_color = 'text-green-400' -%}
+                    {% unless selected_variant.inventory_quantity > 10 %}
+                      {%- assign invertory_count_color = 'text-red-400' -%}
+                    {% endunless %}
+                    {% if selected_variant.available %}
+                      <div class="text-sm mb-1 font-semibold  {{ invertory_count_color }} " >
+                        {% if selected_variant.inventory_quantity < 10 %}
+                          Only
+                        {% endif %}
+                        {{ selected_variant.inventory_quantity }} items* left
+                       </div>
+                    {% endif %}                   
+                    <div>
+                      <button
+                      {% unless selected_variant.available %}
+                        disabled
+                      {% endunless %}
+                      type="submit" class="w-full p-4 mb-4 bg-gray-900 cursor-pointer hover:bg-gray-700 duration-75 transition-all text-center text-white">
+                        {% if selected_variant.available  %}
+                        <span> Add to cart </span>
+                          {% else %}
+                            <span>Out of stock</span>
+                        {% endif %}
+                      </button>
+                     </div>
+                     {% if selected_variant.available %}
+                      {{ form | payment_button }}
+                     {% endif %}
+                  
                   </div>
                 {% else %}
                   <div></div>
@@ -153,7 +170,7 @@
   </div>
   <div id="spinner_{{ section.id }}" class="spinner hidden fixed w-full h-full bg-black top-0 left-0 bg-opacity-30">
     <div class="h-full w-full flex justify-center items-center ">
-      <span class="text-3xl text-white">Loading...</span>
+      <span class="text-3xl animate-spin  border-l-2  text-white w-[300px] h-[300px] rounded-full"></span>
     </div>
   </div>
 </section>
