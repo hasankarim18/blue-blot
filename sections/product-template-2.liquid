@@ -29,12 +29,13 @@
       <product-info>
         <div>
           {%- form 'product'
-            , product -%}
+            , product, id:'priduct_form', novalidate:'novalidate' -%}
             {% comment %} #variant_id {% endcomment %}
             <input
             type="number"
             readonly
             name="id"
+            id="{{ section.id }}_variant_id"
             class="bg-indigo-100 p-1 rounded-md text-center "
             value="{{ selected_variant.id }}">
 
@@ -90,7 +91,7 @@
                 {% when 'variant_selector' %}
                   <div>
                     {%- unless product.has_only_default_variant -%}
-                    <vaiant-selector data-url="{{ product.url }}" data-section="{{ section.id }}" >                     
+                    <vaiant-selector  data-url="{{ product.url }}" data-section="{{ section.id }}" >                     
                       <div  class="mb-4  p-2 rounded-sm bg-gray-50 ">  
                         <h2 class="text-xl mb-2">Select Variant:</h2>                     
                           {% for option in product.options_with_values %}
@@ -125,6 +126,7 @@
                   {% comment %} #cart_action {% endcomment %}
                 {% when 'cart_action' %}
                         {% comment %} #add_to_cart {% endcomment %}
+                 
                   <div class="mb-4">
                     <button
                     {% unless selected_variant.available %}

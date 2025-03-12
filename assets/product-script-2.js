@@ -16,6 +16,7 @@ customElements.define("product-info", ProductInfo);
 class VariantSelector extends HTMLElement {
   constructor() {
     super();
+    this.form = document.querySelector("#priduct_form");
     this.addEventListener("change", (e) => {
       this.onVariantChange();
     });
@@ -24,6 +25,11 @@ class VariantSelector extends HTMLElement {
   onVariantChange() {
     this.getSelectedOptions();
     this.getSelectedVariant();
+    if (this.currentVariant) {
+      this.updateUrl();
+      this.updatePrice();
+      this.updateVarintId();
+    }
   }
 
   getSelectedOptions() {
@@ -51,7 +57,39 @@ class VariantSelector extends HTMLElement {
         .includes(false);
       if (findings) return variant;
     });
+
     console.log(this.currentVariant);
+  }
+
+  // #update url
+  updateUrl() {
+    if (!this.currentVariant) return;
+    window.history.replaceState(
+      {},
+      "",
+      `${this.dataset.url}?variant=${this.currentVariant.id}`
+    );
+  }
+  // #update variant id
+  updateVarintId() {
+    if (!this.currentVariant) return;
+    const form_input = document
+      .querySelector("#priduct_form")
+      .querySelector('input[name="id"]');
+    form_input.value = this.currentVariant.id;
+  }
+
+  // #update price
+
+  updatePrice() {
+    if (!this.currentVariant) return;
+  }
+
+  // #update ui
+  updateUi() {
+    if (!this.currentVariant) return;
+
+    // update price
   }
 } // vaiant selector
 
