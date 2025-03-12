@@ -141,3 +141,31 @@ class VariantSelector extends HTMLElement {
 // vaiant selector
 
 customElements.define("vaiant-selector", VariantSelector);
+
+// #varaint selector swatch
+
+class ProductInfoSwatch extends HTMLElement() {
+  constructor() {
+    super();
+    this.onVariantChange();
+  }
+
+  onVariantChange() {
+    console.log("on variant change");
+  }
+}
+
+customElements.define("product-info-swatch", ProductInfoSwatch);
+// #variant selector swatch
+class VariantSelectorSwatch extends HTMLElement() {
+  constructor() {
+    super();
+    this.onVariantChange();
+  }
+
+  onVariantChange() {
+    console.log("on variant change");
+  }
+}
+
+customElements.define("vaiant-selector-swatch", VariantSelectorSwatch);

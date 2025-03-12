@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="product_template_2_form sticky top-5 ">
-      <product-info>
+      <product-info-swatch data-url="{{ product.url }}" data-section="{{ section.id }}">
         swatch
         <div>
           {%- form 'product'
@@ -81,7 +81,7 @@
 
             <div>
               {%- unless product.has_only_default_variant -%}
-                <vaiant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
+                <vaiant-selector-swatch data-url="{{ product.url }}" data-section="{{ section.id }}">
                   <div class="mb-4  p-2 rounded-sm bg-gray-50 ">
                     <h2 class="text-xl mb-2">Select Variant:</h2>
                     {% for option in product.options_with_values %}
@@ -108,7 +108,7 @@
                       </script>
                     {% endfor %}
                   </div>
-                </vaiant-selector>
+                </vaiant-selector-swatch>
               {%- endunless -%}
             </div>
             {% comment %} #ddescription {% endcomment %}
@@ -156,7 +156,7 @@
           {%- endform -%}
         </div>
         <div class="mt-10"></div>
-      </product-info>
+      </product-info-swatch>
     </div>
   </div>
   <div id="spinner_{{ section.id }}" class="spinner hidden fixed w-full h-full bg-black top-0 left-0 bg-opacity-30">
