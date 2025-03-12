@@ -16,18 +16,42 @@ customElements.define("product-info", ProductInfo);
 class VariantSelector extends HTMLElement {
   constructor() {
     super();
-    this.initVariantSelector();
+    this.addEventListener("change", (e) => {
+      this.onVariantChange();
+    });
+  } // constructor
+
+  onVariantChange() {
+    this.getSelectedOptions();
+    this.getSelectedVariant();
   }
 
-  initVariantSelector() {
-    //  console.log("init variant selector");
-    this.getProductUrl();
-    // console.log(this.productUrl);
+  getSelectedOptions() {
+    this.options = Array.from(
+      this.querySelectorAll("select"),
+      (select) => select.value
+    );
+
+    console.log(this.options);
   }
 
-  getProductUrl() {
-    //  this.productUrl = this.getAttribute('data-url')
-    this.productUrl = this.getAttribute("data-url");
+  getVariantJson() {
+    this.variantData =
+      this.variantData ||
+      JSON.parse(this.querySelector('[type="application/json"]').textContent);
+    return this.variantData;
+  }
+
+  getSelectedVariant() {
+    this.currentVariant = this.getVariantJson().find((variant) => {
+      const findings = !variant.options
+        .map((option, index) => {
+          return this.options[index] === option;
+        })
+        .includes(false);
+      if (findings) return variant;
+    });
+    console.log(this.currentVariant);
   }
 } // vaiant selector
 

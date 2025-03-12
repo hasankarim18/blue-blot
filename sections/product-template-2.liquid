@@ -88,29 +88,35 @@
                   </div>
                   {% comment %} #variant selector {% endcomment %}
                 {% when 'variant_selector' %}
-                  <vaiant-selector data-url="{{ product.url }}" data-section="{{ section.id }}" > 
+                  <div>
                     {%- unless product.has_only_default_variant -%}
-                     <div  class="mb-4  p-2 rounded-sm bg-gray-50 ">  
-                       <h2 class="text-xl mb-2">Select Variant:</h2>                     
-                        {% for option in product.options_with_values %}
-                         <li class="mb-2 grid grid-cols-6 border-2 items-center justify-center rounded-sm" >
-                          <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}" class="font-semibold col-span-1 text-sm md:text-xl p-2 mr-2">
-                            {{ option.name }}:
-                          </label>
-                          <select class="w-full p-2 border-l-2 col-span-5" name="options[{{ option.name |  escape }}]" id="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}">
-                            {% for value in option.values %}
-                              <option 
-                               {% if option.selected_value == value %}
-                                selected
-                               {% endif %}
-                               value="{{ value |  escape }}">{{ value }}</option>
-                            {% endfor %}
-                          </select>
-                         </li>
-                        {% endfor %}
-                     </div>
-                    {%- endunless -%}             
-                  </vaiant-selector>
+                    <vaiant-selector data-url="{{ product.url }}" data-section="{{ section.id }}" >                     
+                      <div  class="mb-4  p-2 rounded-sm bg-gray-50 ">  
+                        <h2 class="text-xl mb-2">Select Variant:</h2>                     
+                          {% for option in product.options_with_values %}
+                          <li class="mb-2 grid grid-cols-6 border-2 items-center justify-center rounded-sm" >
+                            <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}" class="font-semibold col-span-1 text-sm md:text-xl p-2 mr-2">
+                              {{ option.name }}:
+                            </label>
+                            <select class="w-full p-2 border-l-2 col-span-5" name="options[{{ option.name |  escape }}]" id="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}">
+                              {% for value in option.values %}
+                                <option 
+                                {% if option.selected_value == value %}
+                                  selected
+                                {% endif %}
+                                value="{{ value |  escape }}">{{ value }}</option>
+                              {% endfor %}
+                            </select>
+                          </li>
+                        
+                          <script type="application/json">
+                              {{ product.variants | json }}
+                          </script>
+                          {% endfor %}
+                      </div>                             
+                    </vaiant-selector>
+                  {%- endunless -%}  
+                </div>
                 {% comment %} #ddescription {% endcomment %}
                 {% when 'description' %}
                  <div class="mb-4">
