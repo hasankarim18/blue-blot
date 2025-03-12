@@ -57,7 +57,7 @@
                       </div>
                     </div>
                 {% when 'price' %}
-                  <div class="mb-4 text-sm">
+                  <div id="price_{{ section.id }}" class="mb-4 text-sm">
                     <span class="font-semibold">Price:</span>        
                     {% if selected_variant.compare_at_price > selected_variant.price %}
                       <span class="text-sm ml-2 font-semibold line-through text-indigo-400" >                                       
@@ -149,6 +149,11 @@
         </div>
         <div class="mt-10"></div>
       </product-info>
+    </div>
+  </div>
+  <div id="spinner_{{ section.id }}" class="spinner hidden fixed w-full h-full bg-black top-0 left-0 bg-opacity-30">
+    <div class="h-full w-full flex justify-center items-center ">
+      <span class="text-3xl text-white">Loading...</span>
     </div>
   </div>
 </section>

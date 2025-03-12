@@ -17,6 +17,7 @@ class VariantSelector extends HTMLElement {
   constructor() {
     super();
     this.form = document.querySelector("#priduct_form");
+    this.spinner = document.getElementById(`spinner_${this.dataset.section}`);
     this.addEventListener("change", (e) => {
       this.onVariantChange();
     });
@@ -29,6 +30,7 @@ class VariantSelector extends HTMLElement {
       this.updateUrl();
       this.updatePrice();
       this.updateVarintId();
+      this.updateUi();
     }
   }
 
@@ -38,7 +40,7 @@ class VariantSelector extends HTMLElement {
       (select) => select.value
     );
 
-    console.log(this.options);
+    //  console.log(this.options);
   }
 
   getVariantJson() {
@@ -58,7 +60,7 @@ class VariantSelector extends HTMLElement {
       if (findings) return variant;
     });
 
-    console.log(this.currentVariant);
+    //  console.log(this.currentVariant);
   }
 
   // #update url
@@ -89,8 +91,46 @@ class VariantSelector extends HTMLElement {
   updateUi() {
     if (!this.currentVariant) return;
 
-    // update price
-  }
-} // vaiant selector
+    const price_id = `price_${this.dataset.section}`;
+    const oldPrice = document.getElementById(price_id);
+
+    // Show spinner
+    if (this.spinner) {
+      this.spinner.classList.remove("hidden");
+    }
+
+    fetch(
+      `${this.dataset.url}?variant=${this.currentVariant.id}&section_id=${this.dataset.section}`
+    )
+      .then((response) => {
+        // if (!response.ok) {
+        //   throw new Error(`HTTP error! Status: ${response.status}`);
+        // }
+        return response.text();
+      })
+      .then((responseText) => {
+        const html = new DOMParser().parseFromString(responseText, "text/html");
+
+        const newPrice = html.getElementById(price_id);
+        if (oldPrice && newPrice) {
+          oldPrice.innerHTML = newPrice.innerHTML;
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching price:", error);
+        if (oldPrice) {
+          oldPrice.innerHTML =
+            '<span class="error-text">Failed to load price</span>';
+        }
+      })
+      .finally(() => {
+        // Hide spinner
+        if (this.spinner) {
+          this.spinner.classList.add("hidden");
+        }
+      });
+  } // update ui
+}
+// vaiant selector
 
 customElements.define("vaiant-selector", VariantSelector);
