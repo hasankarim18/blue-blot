@@ -157,14 +157,15 @@
           {%- endform -%}
         </div>
         <div class="mt-10"></div>
+        <div id="spinner_{{ section.id }}" class="spinner hidden fixed w-full h-full bg-black top-0 left-0 bg-opacity-30">
+          <div class="h-full w-full flex justify-center items-center ">
+            <span class="text-3xl animate-spin  border-l-2  text-white w-[300px] h-[300px] rounded-full"></span>
+          </div>
+        </div>
       </product-info-swatch>
     </div>
   </div>
-  <div id="spinner_{{ section.id }}" class="spinner hidden fixed w-full h-full bg-black top-0 left-0 bg-opacity-30">
-    <div class="h-full w-full flex justify-center items-center ">
-      <span class="text-3xl animate-spin  border-l-2  text-white w-[300px] h-[300px] rounded-full"></span>
-    </div>
-  </div>
+
 </section>
 
 

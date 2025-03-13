@@ -157,8 +157,8 @@ class ProductInfoSwatch extends HTMLElement {
       this.getSelectedOptions();
       this.getSelectedVariant();
       if (this.currentVariant) {
-        console.log(this.options);
-        console.log(this.currentVariant);
+        this.updateUrl();
+        this.updateUi();
       }
     });
   }
@@ -184,13 +184,77 @@ class ProductInfoSwatch extends HTMLElement {
 
   getSelectedVariant() {
     this.currentVariant = this.getVariantJson().find((variant) => {
-      const findings = !variant.options
-        .map((option, index) => {
-          return this.options[index] === option;
+      const findings = variant.options.every(
+        (option, index) => this.options[index] === option
+      );
+      if (findings) {
+        return findings;
+      }
+    }); // find
+  }
+
+  updateUrl() {
+    if (!this.currentVariant) return;
+    window.history.replaceState(
+      {},
+      "",
+      `${this.dataset.url}?variant=${this.currentVariant.id}`
+    );
+  }
+
+  // ------
+  updateUi() {
+    //fetch('')
+    if (!this.currentVariant) return;
+    const varinat_id = this.currentVariant.id;
+    const product_url = this.variantSelectorSwatch.dataset.url;
+    const section_id = this.variantSelectorSwatch.dataset.section;
+
+    const spinner = this.querySelector(`#spinner_${section_id}`);
+
+    /* fetch latest product */
+    if (spinner) {
+      spinner.classList.remove("hidden");
+    }
+
+    try {
+      // load spinner
+
+      // fetch product with section
+      fetch(`${product_url}?variant=${varinat_id}&section_id=${section_id}`)
+        .then((response) => response.text())
+        .then((responseText) => {
+          const parser = new DOMParser();
+          const html = parser.parseFromString(responseText, "text/html");
+          // update_price
+          const oldPrice = this.querySelector(`#price_${section_id}`);
+          const newPrice = html.querySelector(`#price_${section_id}`);
+
+          if (oldPrice && newPrice) {
+            oldPrice.innerHTML = newPrice.innerHTML;
+          }
+          // update cart_action
+          const oldCartAction = this.querySelector(
+            `#cart_action_${section_id}`
+          );
+          const newCartAction = html.querySelector(
+            `#cart_action_${section_id}`
+          );
+          if (oldCartAction && newCartAction) {
+            oldCartAction.innerHTML = newCartAction.innerHTML;
+          }
+
+          //-------------
         })
-        .includes(false);
-      if (findings) return variant;
-    });
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          spinner.classList.add("hidden");
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 } // end class
 
