@@ -1,8 +1,8 @@
 {%- assign product = all_products[section.settings.featured_product] -%}
+{%- assign selected_variant = product.selected_or_first_available_variant -%}
 
-
-<section class="grid gap-4 grid-cols-1 my_container md:grid-cols-2 my-10">
-  <div class="f_p_media">
+<div class="grid gap-4 grid-cols-1 my_container md:grid-cols-2 my-10">
+  <section class="f_p_media">
     <div>
       {% render 'product-feature-media-template-1'
         , media: product.featured_media %}
@@ -11,17 +11,119 @@
       {%- render 'product-media-carousal'
         , product: product -%}
     </div>
-  </div>
+  </section>
 
-  <div class="f_p_form">
+  <section class="f_p_form">
+    <featured-prodcut-one data-url="{{ product.url }}" data-section="{{ section.id }}">
+      {% form 'product'
+        , product
+        , id: 'product_form'
+        , novalidate: 'novalidate' %}
 
-    <div>
-      <h2 class="text-xl">
-        {{ product.title }}
-      </h2>
-    </div>
-  </div>
-</section>
+        <div>
+          <input
+            type="number"
+            name="id"
+            value="{{ selected_variant.id }}">
+        </div>
+
+        <div class="mb-2">
+          <h2 class="text-xl">
+            {{ product.title }}
+          </h2>
+        </div>
+        {% comment %} #price {% endcomment %}
+        <div id="price_{{ section.id }}" class="mb-4 h-[30px] flex justify-start items-center  text-[30px]">
+          <div class="text-2xl ml-2 font-semibold text-blue-600">
+            <span class="font-semibold text-black">Price:</span>
+            <span>
+              {{ selected_variant.price | money_with_currency
+              }}</span>
+          </div>
+          {% if selected_variant.compare_at_price > selected_variant.price %}
+            <div class="text-sm  font-semibold flex h-full items-end  text-red-400">
+              <span class="line-through">
+                {{ selected_variant.compare_at_price | money_with_currency }}</span>
+            </div>
+          {% endif %}
+
+          {% if selected_variant.compare_at_price > selected_variant.price %}
+            <span class="badge-sm ml-4  badge-error">
+              sale
+            </span>
+          {% endif %}
+        </div>
+        {% comment %} #quantiy  {% endcomment %}
+        <div class="mb-2 flex items-center gap-2">
+          <span>Qauntity:</span>
+          <span>
+            <input
+              type="number"
+              min="1"
+              value="1"
+              class="text-center w-[200px] border-2 p-1 rounded-sm text-2xl"
+              name="quantity">
+          </span>
+        </div>
+        {% comment %} #variant selector {% endcomment %}
+        {%- unless product.has_only_default_variant -%}
+          <div class="mb-2">
+            <h2 class="text-xl font-semibold">
+              Select Variant
+            </h2>
+            <ul id="variant_selector_{{ section.id }}">
+              {% for option in product.options_with_values %}
+                <li class="">
+                  <fieldset>
+                    <div class="mb-2 flex items-center justify-start ">
+                      <legend class="text-xl mr-2 font-semibold">{{ option.name }}:</legend>
+                      {% for value in option.values %}
+                        <label class="ml-2 border-2 cursor-pointer p-2 " for="{{ section.id }}-{{ forloop.index }}">
+                          <input
+                            id="{{ section.id }}-{{ forloop.index }}"
+                            {% if option.selected_value == value %}
+                            checked
+                            {% endif %}
+                            value="{{ value }}"
+                            name="options[{{ option.name |  escape }}]"
+                            type="radio">
+                          {{ value }}
+                        </label>
+                      {% endfor %}
+                    </div>
+                  </fieldset>
+                </li>
+                <script type="application/json">
+                  {{ product.variants | json }}
+                </script>
+              {% endfor %}
+            </ul>
+          </div>
+        {%- endunless -%}
+
+        {% comment %} #selected variant {% endcomment %}
+        <div class="mb-2">
+          <span class="badge-sm">{{ selected_variant.title }}</span>
+        </div>
+        {% comment %} #cart Action {% endcomment %}
+        <div class="mb-2" id="cart_action_{{ section.id }}">
+          <button type="submit" class="btn w-full p-2 mb-2 bg-gray-900 hover:bg-gray-700 text-white">Add to cart</button>
+          {{ form | payment_button }}
+        </div>
+        {% comment %} #description {% endcomment %}
+        <div class="mb-2">
+          {{ product.description }}
+        </div>
+
+
+      {% endform %}
+
+    </featured-prodcut-one>
+  </section>
+</div>
+
+<script src="{{ 'featured-product-section-1.js' |  asset_url }}" defer></script>
+
 {% schema %}
   {
     "name": "Feature P. Section-1",
