@@ -144,20 +144,59 @@ customElements.define("vaiant-selector", VariantSelector);
 
 // #varaint selector swatch
 
-class ProductInfoSwatch extends HTMLElement() {
+class ProductInfoSwatch extends HTMLElement {
   constructor() {
     super();
+    this.sectionId = this.dataset.section;
+    this.variantSelectorSwatch = this.querySelector(`vaiant-selector-swatch`);
     this.onVariantChange();
   }
 
   onVariantChange() {
-    console.log("on variant change");
+    this.variantSelectorSwatch.addEventListener("change", () => {
+      this.getSelectedOptions();
+      this.getSelectedVariant();
+      if (this.currentVariant) {
+        console.log(this.options);
+        console.log(this.currentVariant);
+      }
+    });
   }
-}
+  getSelectedOptions() {
+    this.options = Array.from(
+      this.variantSelectorSwatch.querySelectorAll(
+        'input[type="radio"]:checked'
+      ),
+      (radio) => radio.value
+    );
+  }
+
+  getVariantJson() {
+    this.variantData =
+      this.variantData ||
+      JSON.parse(
+        this.variantSelectorSwatch.querySelector('[type="application/json"]')
+          .textContent
+      );
+
+    return this.variantData;
+  }
+
+  getSelectedVariant() {
+    this.currentVariant = this.getVariantJson().find((variant) => {
+      const findings = !variant.options
+        .map((option, index) => {
+          return this.options[index] === option;
+        })
+        .includes(false);
+      if (findings) return variant;
+    });
+  }
+} // end class
 
 customElements.define("product-info-swatch", ProductInfoSwatch);
 // #variant selector swatch
-class VariantSelectorSwatch extends HTMLElement() {
+class VariantSelectorSwatch extends HTMLElement {
   constructor() {
     super();
     this.onVariantChange();
@@ -166,6 +205,7 @@ class VariantSelectorSwatch extends HTMLElement() {
   onVariantChange() {
     console.log("on variant change");
   }
+  //get optins
 }
 
 customElements.define("vaiant-selector-swatch", VariantSelectorSwatch);

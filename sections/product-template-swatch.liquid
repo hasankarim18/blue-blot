@@ -85,23 +85,24 @@
                   <div class="mb-4  p-2 rounded-sm bg-gray-50 ">
                     <h2 class="text-xl mb-2">Select Variant:</h2>
                     {% for option in product.options_with_values %}
-                      <li class="mb-2 grid grid-cols-6 border-2 items-center justify-center rounded-sm">
-                        <label for="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}" class="font-semibold col-span-1 text-sm md:text-xl p-2 mr-2">
-                          {{ option.name }}:
-                        </label>
-                        <select
-                          class="w-full p-2 border-l-2 col-span-5"
-                          name="options[{{ option.name |  escape }}]"
-                          id="{{ section.id }}-{{ option.name }}-{{ forloop.index0 }}">
-                          {% for value in option.values %}
-                            <option
+                      <fieldset class="mb-2">
+                        <legend class="font-semibold text-sm md:text-xl p-2 mr-2">
+                          {{ option.name }}
+                        </legend>
+                        {% for value in option.values %}
+                          <label data-option="{{ option.name |  escape }}" data-value="{{ option.value }}">
+                            <input
+                              name="options[{{ option.name |  escape }}]"
+                              value="{{ value }}"
+                              type="radio"
                               {% if option.selected_value == value %}
-                              selected
-                              {% endif %}
-                              value="{{ value |  escape }}">{{ value }}</option>
-                          {% endfor %}
-                        </select>
-                      </li>
+                              checked
+                              {% endif %}>
+                            {{ value }}
+                          </label>
+                        {% endfor %}
+                      </fieldset>
+
 
                       <script type="application/json">
                         {{ product.variants | json }}
