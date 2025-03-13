@@ -150,6 +150,29 @@ class ProductInfoSwatch extends HTMLElement {
     this.sectionId = this.dataset.section;
     this.variantSelectorSwatch = this.querySelector(`vaiant-selector-swatch`);
     this.onVariantChange();
+
+    this.variantSelectorSwatch
+      .querySelectorAll('input[type="radio"]')
+      .forEach((radio) => {
+        radio.addEventListener("change", (e) => {
+          this.handleSwatchSelection(e);
+        });
+      });
+  }
+
+  handleSwatchSelection(e) {
+    const selectedLabel = e.target.closest(".swatch-level");
+    if (!selectedLabel) return;
+    // remove selected class from all options of the same group
+    const optionName = selectedLabel.dataset.option;
+    this.variantSelectorSwatch
+      .querySelectorAll(`[data-option=${optionName}]`)
+      .forEach((label) => {
+        label.classList.remove("selected");
+      });
+
+    selectedLabel.classList.add("selected");
+    // console.log(e);
   }
 
   onVariantChange() {
