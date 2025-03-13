@@ -168,10 +168,10 @@ class ProductInfoSwatch extends HTMLElement {
     this.variantSelectorSwatch
       .querySelectorAll(`[data-option=${optionName}]`)
       .forEach((label) => {
-        label.classList.remove("selected");
+        label.classList.remove("selected_swatch");
       });
 
-    selectedLabel.classList.add("selected");
+    selectedLabel.classList.add("selected_swatch");
     // console.log(e);
   }
 
@@ -265,6 +265,19 @@ class ProductInfoSwatch extends HTMLElement {
           );
           if (oldCartAction && newCartAction) {
             oldCartAction.innerHTML = newCartAction.innerHTML;
+          }
+
+          // selected_variant update
+
+          const oldSelectedVariant = this.querySelector(
+            `#selected_variant_${section_id}`
+          );
+          const newSelectedVariant = html.querySelector(
+            `#selected_variant_${section_id}`
+          );
+
+          if (oldSelectedVariant && newSelectedVariant) {
+            oldSelectedVariant.innerHTML = newSelectedVariant.innerHTML;
           }
 
           //-------------

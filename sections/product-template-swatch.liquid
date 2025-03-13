@@ -87,31 +87,41 @@
                     {% for option in product.options_with_values %}
 
                       <fieldset class="mb-2">
-                        <legend class="font-semibold text-sm md:text-xl p-2 mr-2">
-                          {{ option.name }}
-                        </legend>
-                        {% for value in option.values %}
-                          {%- assign is_selected = false -%}
-                          {%- if product.variants.first.options[forloop.parentloop.index0] == value -%}
-                            {%- assign is_selected = true -%}
-                          {%- endif -%}
-                          <label
-                            class="
-                            {% if is_selected %} selected {% endif %}
-                            swatch-level cursor-pointer border-2 border-gray-200 mx-2 rounded-full p-2"
-                            data-option="{{ option.name |  escape }}"
-                            data-value="{{ option.value }}">
-                            <input
-                              class="hidden"
-                              name="options[{{ option.name |  escape }}]"
-                              value="{{ value }}"
-                              type="radio"
-                              {% if option.selected_value == value %}
-                              checked
-                              {% endif %}>
-                            {{ value }}
-                          </label>
-                        {% endfor %}
+                        <div class="flex ">
+                          <legend class="font-semibold text-sm md:text-xl p-2 mr-2">
+                            {{ option.name }}
+                          </legend>
+                          {% for value in option.values %}
+                            {%- assign is_selected = false -%}
+                            {%- if product.variants.first.options[forloop.parentloop.index0] == value -%}
+                              {%- assign is_selected = true -%}
+                            {%- endif -%}
+                            <style>
+                              .selected_swatch {
+                                outline: 2px solid red;
+                              }
+                            </style>
+                            <label
+                              {% if option.name == 'Color' %}
+                              style="background:{{ value.swatch.color }}; color:white;"
+                              {% endif %}
+                              class="
+                            {% if is_selected %} selected_swatch {% endif %}
+                            swatch-level cursor-pointer  border-2 border-gray-200 mx-2 rounded-full p-2"
+                              data-option="{{ option.name |  escape }}"
+                              data-value="{{ option.value }}">
+                              <input
+                                class="hidden"
+                                name="options[{{ option.name |  escape }}]"
+                                value="{{ value }}"
+                                type="radio"
+                                {% if option.selected_value == value %}
+                                checked
+                                {% endif %}>
+                              {{ value }}
+                            </label>
+                          {% endfor %}
+                        </div>
                       </fieldset>
 
 
@@ -124,7 +134,11 @@
               {%- endunless -%}
             </div>
             {% comment %} #ddescription {% endcomment %}
-
+            <div class="mb-4">
+              <h2 id="selected_variant_{{ section.id }}" class="">Selected Variant:
+                <span class="badge-sm">{{ selected_variant.title }}</span>
+              </h2>
+            </div>
             <div class="mb-4">
               {{ product.description }}
             </div>
@@ -178,13 +192,6 @@
   </div>
 
 </section>
-
-<style>
-  .selected {
-    background-color: black;
-    color: white;
-  }
-</style>
 
 
 <script src="{{ 'product-script-2.js' |  asset_url }}" defer></script>
