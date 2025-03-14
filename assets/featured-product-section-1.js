@@ -7,6 +7,10 @@ class FeaturedrProductSectionOne extends HTMLElement {
     this.variantSelector = this.querySelector(
       `#variant_selector_${this.sectionId}`
     );
+    this.featureMedia = this.querySelector(
+      `#selected_variant_feature_media_${this.sectionId}`
+    );
+
     this.onVariantChange();
 
     this.variantSelector
@@ -22,7 +26,7 @@ class FeaturedrProductSectionOne extends HTMLElement {
     const selectedLabel = e.target.closest(`#swatch_label_${this.sectionId}`);
     if (!selectedLabel) return;
     const optionName = selectedLabel.dataset.option;
-    console.log(optionName);
+
     this.variantSelector
       .querySelectorAll(`[data-option=${optionName}]`)
       .forEach((label) => {
@@ -79,7 +83,10 @@ class FeaturedrProductSectionOne extends HTMLElement {
   updateUi() {
     if (!this.currentVariant) return;
     const variantId = this.currentVariant.id;
+    const spinner = this.querySelector(`#spinner_${this.sectionId}`);
     try {
+      spinner.classList.remove("hidden");
+      spinner.classList.add("flex");
       fetch(
         `${this.productUrl}?variant=${variantId}&section_id=${this.sectionId}`
       )
@@ -90,12 +97,41 @@ class FeaturedrProductSectionOne extends HTMLElement {
           // update price
           const oldPrice = this.querySelector(`#price_${this.sectionId}`);
           const newPrice = html.querySelector(`#price_${this.sectionId}`);
-          console.log(oldPrice);
+
           if (oldPrice && newPrice) {
             oldPrice.innerHTML = newPrice.innerHTML;
           }
 
           // update cart action
+          const oldCartAction = this.querySelector(
+            `#cart_action_${this.sectionId}`
+          );
+          const newCartAction = html.querySelector(
+            `#cart_action_${this.sectionId}`
+          );
+
+          if (oldCartAction && newCartAction) {
+            oldCartAction.innerHTML = newCartAction.innerHTML;
+          }
+
+          // update feature media
+          const oldFM = this.querySelector(`#feature_media_${this.sectionId}`);
+
+          const newFM = html.querySelector(`#feature_media_${this.sectionId}`);
+          console.log(oldFM);
+          if (oldFM && newFM) {
+            oldFM.innerHTML = newFM.innerHTML;
+          }
+
+          //------------
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          //
+          spinner.classList.add("hidden");
+          spinner.classList.remove("flex");
         });
     } catch (error) {
       console.log(error);

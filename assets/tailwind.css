@@ -991,6 +991,10 @@ video {
   height: 100vh;
 }
 
+.h-\[100px\] {
+  height: 100px;
+}
+
 .min-h-\[500px\] {
   min-height: 500px;
 }
@@ -1037,6 +1041,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[100px\] {
+  width: 100px;
 }
 
 .max-w-\[394px\] {
@@ -1251,6 +1259,11 @@ video {
 .border-violet-800 {
   --tw-border-opacity: 1;
   border-color: rgb(91 33 182 / var(--tw-border-opacity, 1));
+}
+
+.border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
 }
 
 .border-b-blue-950 {
