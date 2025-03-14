@@ -16,6 +16,7 @@ class FeaturedrProductSectionOne extends HTMLElement {
       this.getSelectedVariant();
       console.log(this.currentVariant);
       // console.log(this.variantData);
+      this.updateVariantId();
     });
   }
 
@@ -42,6 +43,16 @@ class FeaturedrProductSectionOne extends HTMLElement {
       if (findings) return findings;
     });
   }
+
+  // update Variant Id
+  updateVariantId() {
+    if (!this.currentVariant) return;
+    const variantId = this.querySelector(`input[name="id"]`);
+    variantId.value = this.currentVariant.id;
+  }
+
+  // update ui
+  updateUi() {}
 
   //   ------------------------------------
 }
