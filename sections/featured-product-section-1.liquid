@@ -121,11 +121,22 @@
         {% comment %} #selected variant {% endcomment %}
         <div class="mb-2">
           <span class="badge-sm">{{ selected_variant.title }}</span>
+          <span>
+            {{ selected_variant.inventory_quantity }} items available
+          </span>
         </div>
         {% comment %} #cart Action {% endcomment %}
         <div class="mb-2" id="cart_action_{{ section.id }}">
-          <button type="submit" class="btn w-full p-2 mb-2 bg-gray-900 hover:bg-gray-700 text-white">Add to cart</button>
-          {{ form | payment_button }}
+          {% if selected_variant.available %}
+            <button type="submit" class="btn w-full p-2 mb-2 bg-gray-900 hover:bg-gray-700 text-white">Add to cart</button>
+            {{ form | payment_button }}
+          {% else %}
+            <button
+              disabled
+              type="submit"
+              class="btn w-full p-2 mb-2 cursor-not-allowed bg-gray-700 text-white">Add to cart</button>
+          {% endif %}
+
         </div>
         {% comment %} #description {% endcomment %}
         <div class="mb-2">

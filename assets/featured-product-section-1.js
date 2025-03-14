@@ -40,6 +40,7 @@ class FeaturedrProductSectionOne extends HTMLElement {
       //  console.log(this.currentVariant);
       // console.log(this.variantData);
       this.updateVariantId();
+      this.updateUi();
     });
   }
 
@@ -75,7 +76,31 @@ class FeaturedrProductSectionOne extends HTMLElement {
   }
 
   // update ui
-  updateUi() {}
+  updateUi() {
+    if (!this.currentVariant) return;
+    const variantId = this.currentVariant.id;
+    try {
+      fetch(
+        `${this.productUrl}?variant=${variantId}&section_id=${this.sectionId}`
+      )
+        .then((response) => response.text())
+        .then((responseText) => {
+          const parser = new DOMParser();
+          const html = parser.parseFromString(responseText, "text/html");
+          // update price
+          const oldPrice = this.querySelector(`#price_${this.sectionId}`);
+          const newPrice = html.querySelector(`#price_${this.sectionId}`);
+          console.log(oldPrice);
+          if (oldPrice && newPrice) {
+            oldPrice.innerHTML = newPrice.innerHTML;
+          }
+
+          // update cart action
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   //   ------------------------------------
 }
