@@ -78,9 +78,26 @@
                     <div class="mb-2 flex items-center justify-start ">
                       <legend class="text-xl mr-2 font-semibold">{{ option.name }}:</legend>
                       {% for value in option.values %}
-                        <label class="ml-2 border-2 cursor-pointer p-2 " for="{{ section.id }}-{{ forloop.index }}">
+                        {%- assign is_selected = false -%}
+                        {%- if product.variants.first.options[forloop.parentloop.index0] == value -%}
+                          {%- assign is_selected = true -%}
+                        {%- endif -%}
+                        <style>
+                          .selected_swatch {
+                            outline: 2px solid red;
+                          }
+                        </style>
+                        <label
+                          data-option="{{ option.name }}"
+                          data-value="{{ value }}"
+                          id="swatch_label_{{ section.id }}"
+                          class="
+                          {% if is_selected %} selected_swatch {% endif %}
+                          ml-2 swatch-label border-2 cursor-pointer p-2 "
+                          for="{{option.name}}-{{ section.id }}-{{ forloop.index }}">
                           <input
-                            id="{{ section.id }}-{{ forloop.index }}"
+                            class="hidden"
+                            id="{{option.name}}-{{ section.id }}-{{ forloop.index }}"
                             {% if option.selected_value == value %}
                             checked
                             {% endif %}

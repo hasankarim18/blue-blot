@@ -8,13 +8,36 @@ class FeaturedrProductSectionOne extends HTMLElement {
       `#variant_selector_${this.sectionId}`
     );
     this.onVariantChange();
+
+    this.variantSelector
+      .querySelectorAll(`input[type="radio"]`)
+      .forEach((radio) => {
+        radio.addEventListener("change", (e) => {
+          this.handleSwatchSelection(e);
+        });
+      });
+  }
+
+  handleSwatchSelection(e) {
+    const selectedLabel = e.target.closest(`#swatch_label_${this.sectionId}`);
+    if (!selectedLabel) return;
+    const optionName = selectedLabel.dataset.option;
+    console.log(optionName);
+    this.variantSelector
+      .querySelectorAll(`[data-option=${optionName}]`)
+      .forEach((label) => {
+        // console.log(label);
+        label.classList.remove("selected_swatch");
+      });
+
+    selectedLabel.classList.add("selected_swatch");
   }
 
   onVariantChange() {
     this.variantSelector.addEventListener("change", () => {
       this.getSelectedOptions();
       this.getSelectedVariant();
-      console.log(this.currentVariant);
+      //  console.log(this.currentVariant);
       // console.log(this.variantData);
       this.updateVariantId();
     });
