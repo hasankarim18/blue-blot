@@ -1,24 +1,23 @@
 {%- assign selected_variant = product.selected_or_first_available_variant -%}
+<product-info-swatch data-url="{{ product.url }}" data-section="{{ section.id }}">
+  <section class="product_template_2">
 
-<section class="product_template_2">
+    <div class="grid grid-cols-1 md:grid-cols-2 my_container gap-6 py-10">
+      <div class="product_template_2_media">
+        <div id="feature_media_{{ section.id }}" class="feature_media mb-4">
+          {% render 'product-feature-media-template-1'
+            , media: selected_variant.featured_media %}
+        </div>
+        {% comment %} # media loop {% endcomment %}
+        <div class=" grid grid-cols-3 gap-2">
+          {% for media in product.media offset: 1 %}
 
-  <div class="grid grid-cols-1 md:grid-cols-2 my_container gap-6 py-10">
-    <div class="product_template_2_media">
-      <div class="feature_media mb-4">
-        {% render 'product-feature-media-template-1'
-          , media: product.featured_media %}
+            {% render 'product-media-template-1'
+              , media: media %}
+          {% endfor %}
+        </div>
       </div>
-      {% comment %} # media loop {% endcomment %}
-      <div class=" grid grid-cols-3 gap-2">
-        {% for media in product.media offset: 1 %}
-
-          {% render 'product-media-template-1'
-            , media: media %}
-        {% endfor %}
-      </div>
-    </div>
-    <div class="product_template_2_form sticky top-5 ">
-      <product-info-swatch data-url="{{ product.url }}" data-section="{{ section.id }}">
+      <div class="product_template_2_form sticky top-5 ">
 
         <div>
           {%- form 'product'
@@ -187,12 +186,12 @@
             <span class="text-3xl animate-spin  border-l-2  text-white w-[300px] h-[300px] rounded-full"></span>
           </div>
         </div>
-      </product-info-swatch>
+
+      </div>
     </div>
-  </div>
 
-</section>
-
+  </section>
+</product-info-swatch>
 
 <script src="{{ 'product-script-2.js' |  asset_url }}" defer></script>
 

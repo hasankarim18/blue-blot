@@ -118,7 +118,7 @@ class FeaturedrProductSectionOne extends HTMLElement {
           const oldFM = this.querySelector(`#feature_media_${this.sectionId}`);
 
           const newFM = html.querySelector(`#feature_media_${this.sectionId}`);
-          console.log(oldFM);
+          //  console.log(oldFM);
           if (oldFM && newFM) {
             oldFM.innerHTML = newFM.innerHTML;
           }

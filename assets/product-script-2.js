@@ -280,6 +280,19 @@ class ProductInfoSwatch extends HTMLElement {
             oldSelectedVariant.innerHTML = newSelectedVariant.innerHTML;
           }
 
+          // update feature image
+          const oldFeatureMedia = this.querySelector(
+            `#feature_media_${this.sectionId}`
+          );
+          const newFeatureMedia = html.querySelector(
+            `#feature_media_${this.sectionId}`
+          );
+          //  console.log(newFeatureMedia);
+
+          if (oldFeatureMedia && newFeatureMedia) {
+            oldFeatureMedia.innerHTML = newFeatureMedia.innerHTML;
+          }
+
           //-------------
         })
         .catch((error) => {
