@@ -35,6 +35,14 @@
           <h2 class="text-xl text-gray-800 mb-4">
             {{ product.title }}
           </h2>
+          <p class="mb-4">
+            <input
+              class="bg-rose-400 text-center"
+              name="id"
+              value="{{ selected_variant.id }}"
+              type="number"
+              readonly>
+          </p>
           {% comment %} #price {% endcomment %}
           <div class="mb-4" id="price_{{ section.id }}">
             <div class="flex justify-start items-center gap-2">
@@ -51,6 +59,7 @@
           <div id="quantity_{{ section.id }}" class="mb-4 gap-2 grid-cols-6 flex justify-start items-center ">
             <span class="">Quantity:</span>
             <input
+              name="quantity"
               value="1"
               min="1"
               max="5"
@@ -60,10 +69,8 @@
           </div>
           {% comment %} #variant selector {% endcomment %}
           {%- unless product.has_only_default_variant -%}
-            <div id="variant_secector_{{ section.id }}" class="badge-sm w-full">
-              <h2 class="text-sm font-semibold mb-2">Select Variant:
-                <span class="ml-2">{{ selected_variant.title }}</span>
-              </h2>
+            <div id="variant_secector_{{ section.id }}" class="badge-sm  mb-4 w-full">
+
               <div id="variant_selector_{{ section.id }}">
                 {% for option in product.options_with_values %}
 
@@ -83,14 +90,12 @@
                           }
                         </style>
                         {% for value in option.values %}
-                          {%- assign is_selected = false -%}
-                          {%- if product.variants.first.options[forloop.parentloop.index0] == value -%}
-                            {%- assign is_selected = true -%}
-                          {%- endif -%}
                           <label
                             data-label="label_{{ section.id }}"
                             class="
-                            {% if is_selected %} selected_swatch {% endif %}
+                             {% if option.selected_value == value %}
+                              selected_swatch
+                              {% endif %}
                             {% if option.name == 'Color' %} w-[40px] h-[40px] rounded-full {% endif %}
                             swatch_label flex justify-center items-center cursor-pointer"
                             data-value="{{ value |  downcase }}"
@@ -133,13 +138,41 @@
                 {% endfor %}
               </div>
             </div>
+            <h2 class="text-sm font-semibold mb-4">Selected Variant:
+              <span id="variant_title_{{ section.id }}" class="ml-2 badge-sm">{{ selected_variant.title }}</span>
+            </h2>
           {%- endunless -%}
 
-
+          {% comment %} #cart action {% endcomment %}
+          <div id="cart_action_{{ section.id }}" class="mb-4 relative">
+            <div>
+              {{ selected_variant.inventory_quantity }} items left
+            </div>
+            {% if selected_variant.available %}
+              <button class="w-full bg-gray-700 mb-2 rounded-md p-2 text-white hover:bg-gray-900 uppercase">
+                Add to cart
+              </button>
+              <style>
+                .shopify-payment-button__button--unbranded {
+                  border-radius: 6px;
+                  text-transform: uppercase;
+                }
+              </style>
+              {{ form | payment_button }}
+            {% else %}
+              <button disabled class="w-full bg-gray-700 mb-2 rounded-md p-2 text-white uppercase">
+                sold out
+              </button>
+            {% endif %}
+            <div id="spinner_{{ section.id }}" class="spinner absolute z-10 left-0 top-0 w-full h-full bg-black bg-opacity-40 justify-center items-center hidden ">
+              <span class="w-16 h-16 animate-spin  border-r-2 rounded-full"></span>
+            </div>
+          </div>
         {%- endform -%}
       </section>
     </div>
   </div>
+
 </product-swatch-image>
 <script defer src="{{ 'product-page-swatch-image.js' |  asset_url }}"></script>
 
