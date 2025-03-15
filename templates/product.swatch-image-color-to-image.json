@@ -8,55 +8,12 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "Product with swatch image and color",
   "sections": {
-    "product_template_two": {
-      "type": "product-template-2",
-      "blocks": {
-        "heading_text_N9T3rq": {
-          "type": "heading_text",
-          "settings": {
-            "text": "{{ product.title }}",
-            "heading_text_align": "left"
-          }
-        },
-        "vendor": {
-          "type": "vendor",
-          "settings": {}
-        },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
-        "quantity_zR8XYH": {
-          "type": "quantity",
-          "settings": {}
-        },
-        "variant_selector": {
-          "type": "variant_selector",
-          "settings": {}
-        },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "cart_action_Xw38bm": {
-          "type": "cart_action",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "heading_text_N9T3rq",
-        "vendor",
-        "price",
-        "quantity_zR8XYH",
-        "variant_selector",
-        "description",
-        "cart_action_Xw38bm"
-      ],
+    "main": {
+      "type": "template-product-swatch-image-color-to-image",
       "settings": {}
     }
   },
-  "order": [
-    "product_template_two"
-  ]
+  "order": ["main"]
 }
