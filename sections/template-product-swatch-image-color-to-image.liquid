@@ -1,5 +1,134 @@
-<div>
-  <p class="text-center">product.swatch-image-color-to-image = prefered imgage else show color</p>
-  <section>media</section>
-  <section>infro</section>
-</div>
+{%- liquid
+  assign selected_variant = product.selected_or_first_available_variant
+-%}
+
+<product-swatch-image data-url="{{ product.url }}" data-section="{{ section.id }}">
+  <div>
+    <p class="text-center">template name:
+      <span class="bg-green-200">
+        swatch-image-color-to-image</span>
+      = prefered imgage else show color</p>
+    {% comment %}  {% endcomment %}
+    <div class="my_container gap-4 grid grid-cols-1 md:grid-cols-5 mt-10">
+      <section class="md:col-span-2 col-span-1">
+        <div id="feature_media_{{ section.id }}">
+          {%- render 'product-feature-media-template-1'
+            , media: selected_variant.featured_media -%}
+        </div>
+        <div class="mt-4">
+          <ul class="grid grid-cols-1 md:grid-cols-3 gap-2 rounded-md overflow-hidden" id="product_media_{{ section.id }}">
+            {% for media in product.media %}
+              <li>
+                {% render 'product-media-template-1'
+                  , media: media %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+      <section class="md:col-span-3 col-span-1">
+        {%- form 'product'
+          , product
+          , novalidate: 'novalidate' -%}
+
+          {% comment %} #product title {% endcomment %}
+          <h2 class="text-xl text-gray-800 mb-4">
+            {{ product.title }}
+          </h2>
+          {% comment %} #price {% endcomment %}
+          <div class="mb-4" id="price_{{ section.id }}">
+            <div class="flex justify-start items-center gap-2">
+              <span class="text-xl badge-sm font-semibold">Price: {{ selected_variant.price | money_with_currency }}</span>
+              {% if product.compare_at_price > selected_variant.price %}
+                <span class="line-through self-end font-semibold text-red-400 ">{{ product.compare_at_price | money }}</span>
+                <span class="badge-sm badge-error uppercase ">sale</span>
+              {% endif %}
+            </div>
+          </div>
+
+          {% comment %} #quantity  {% endcomment %}
+
+          <div id="quantity_{{ section.id }}" class="mb-4 gap-2 grid-cols-6 flex justify-start items-center ">
+            <span class="">Quantity:</span>
+            <input
+              value="1"
+              min="1"
+              max="5"
+              type="number"
+              name="id"
+              class="p-1 text-center font-semibold text-2xl w-full border-2 col-span-4 rounded-md ">
+          </div>
+          {% comment %} #variant selector {% endcomment %}
+          {%- unless product.has_only_default_variant -%}
+            <div id="variant_secector_{{ section.id }}" class="badge-sm w-full">
+              <h2 class="text-sm font-semibold mb-2">Select Variant</h2>
+              {% for option in product.options_with_values %}
+                <fieldset data-option-name="{{ option.name }}" id="{{ option.name }}_{{ section.id }}">
+                  <div class="mb-4">
+                    <legend class="font-semibold text-xl" id="option_name_{{ section.id }}">
+                      <div class="flex gap-2">
+                        <span>
+                          {{ option.name }}:</span>
+                        <span class="block" id="show_value_{{ option.name |  downcase }}_{{ section.id }}"></span>
+                      </div>
+                    </legend>
+                    <div class="flex gap-2">
+                      {% for value in option.values %}
+                        <label
+                          data-label="label_{{ section.id }}"
+                          class=" flex justify-center items-center cursor-pointer"
+                          data-value="{{ value |  downcase }}"
+                          data-option="{{ option.name |  downcase }}"
+                          for="{{ value }}_{{ section.id }}_{{ forloop.index0 }}">
+                          <input
+                            class=""
+                            name="options[{{ option.name |  escape }}]"
+                            data-forloop="{{ forloop.index0 }}"
+                            data-variant-option-value="{{ value |  downcase }}"
+                            id="{{ value }}_{{ section.id }}_{{ forloop.index0 }}"
+                            value="{{ value }}"
+                            type="radio">
+                          {% if option.name == 'Color' %}
+                            {% if value.swatch.image %}
+                              <img
+                                src="{{ value.swatch.image |  image_url  }}"
+                                class="w-[40px] h-[40px] rounded-full"
+                                width=""
+                                height=""
+                                alt="">
+                            {% else %}
+                              <span style="background-color: {{ value.swatch.color  }};" class="w-[40px] h-[40px] rounded-full"></span>
+                            {% endif %}
+                          {% else %}
+                            <span class="badge-sm">{{ value }}</span>
+                          {% endif %}
+
+                        </label>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </fieldset>
+              {% endfor %}
+            </div>
+          {%- endunless -%}
+
+        {%- endform -%}
+      </section>
+    </div>
+  </div>
+</product-swatch-image>
+<script defer src="{{ 'product-page-swatch-image.js' |  asset_url }}"></script>
+
+{% schema %}
+  {
+    "name": "Product Swatch Image",
+    "tag": "section",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Product Swatch Image ",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}

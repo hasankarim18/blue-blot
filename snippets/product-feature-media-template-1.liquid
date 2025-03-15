@@ -1,3 +1,11 @@
+{% comment %} 
+        #how to call 
+      
+         {%- render 'product-feature-media-template-1'
+                  , media: selected_variant.featured_media -%}
+{% endcomment %}
+
+
 {% comment %}   style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100}}%;" {% endcomment %}
 {% case media.media_type %}
   {% when 'image' %}
