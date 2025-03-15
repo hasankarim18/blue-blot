@@ -923,10 +923,6 @@ video {
   display: block;
 }
 
-.inline-block {
-  display: inline-block;
-}
-
 .inline {
   display: inline;
 }
@@ -1047,16 +1043,12 @@ video {
   width: 30px;
 }
 
-.w-\[60px\] {
-  width: 60px;
+.w-\[40px\] {
+  width: 40px;
 }
 
 .w-full {
   width: 100%;
-}
-
-.w-\[40px\] {
-  width: 40px;
 }
 
 .max-w-\[394px\] {

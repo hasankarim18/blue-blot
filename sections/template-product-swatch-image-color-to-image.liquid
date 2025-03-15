@@ -61,56 +61,80 @@
           {% comment %} #variant selector {% endcomment %}
           {%- unless product.has_only_default_variant -%}
             <div id="variant_secector_{{ section.id }}" class="badge-sm w-full">
-              <h2 class="text-sm font-semibold mb-2">Select Variant</h2>
-              {% for option in product.options_with_values %}
-                <fieldset data-option-name="{{ option.name }}" id="{{ option.name }}_{{ section.id }}">
-                  <div class="mb-4">
-                    <legend class="font-semibold text-xl" id="option_name_{{ section.id }}">
-                      <div class="flex gap-2">
-                        <span>
-                          {{ option.name }}:</span>
-                        <span class="block" id="show_value_{{ option.name |  downcase }}_{{ section.id }}"></span>
-                      </div>
-                    </legend>
-                    <div class="flex gap-2">
-                      {% for value in option.values %}
-                        <label
-                          data-label="label_{{ section.id }}"
-                          class=" flex justify-center items-center cursor-pointer"
-                          data-value="{{ value |  downcase }}"
-                          data-option="{{ option.name |  downcase }}"
-                          for="{{ value }}_{{ section.id }}_{{ forloop.index0 }}">
-                          <input
-                            class=""
-                            name="options[{{ option.name |  escape }}]"
-                            data-forloop="{{ forloop.index0 }}"
-                            data-variant-option-value="{{ value |  downcase }}"
-                            id="{{ value }}_{{ section.id }}_{{ forloop.index0 }}"
-                            value="{{ value }}"
-                            type="radio">
-                          {% if option.name == 'Color' %}
-                            {% if value.swatch.image %}
-                              <img
-                                src="{{ value.swatch.image |  image_url  }}"
-                                class="w-[40px] h-[40px] rounded-full"
-                                width=""
-                                height=""
-                                alt="">
-                            {% else %}
-                              <span style="background-color: {{ value.swatch.color  }};" class="w-[40px] h-[40px] rounded-full"></span>
-                            {% endif %}
-                          {% else %}
-                            <span class="badge-sm">{{ value }}</span>
-                          {% endif %}
+              <h2 class="text-sm font-semibold mb-2">Select Variant:
+                <span class="ml-2">{{ selected_variant.title }}</span>
+              </h2>
+              <div id="variant_selector_{{ section.id }}">
+                {% for option in product.options_with_values %}
 
-                        </label>
-                      {% endfor %}
+                  <fieldset data-option-name="{{ option.name }}" id="{{ option.name }}_{{ section.id }}">
+                    <div class="mb-4">
+                      <legend class="font-semibold text-xl" id="option_name_{{ section.id }}">
+                        <div class="flex gap-2">
+                          <span>
+                            {{ option.name }}:</span>
+                          <span class="block" id="show_value_{{ option.name |  downcase }}_{{ section.id }}"></span>
+                        </div>
+                      </legend>
+                      <div class="flex gap-2">
+                        <style>
+                          .selected_swatch {
+                            outline: 2px solid blue;
+                          }
+                        </style>
+                        {% for value in option.values %}
+                          {%- assign is_selected = false -%}
+                          {%- if product.variants.first.options[forloop.parentloop.index0] == value -%}
+                            {%- assign is_selected = true -%}
+                          {%- endif -%}
+                          <label
+                            data-label="label_{{ section.id }}"
+                            class="
+                            {% if is_selected %} selected_swatch {% endif %}
+                            {% if option.name == 'Color' %} w-[40px] h-[40px] rounded-full {% endif %}
+                            swatch_label flex justify-center items-center cursor-pointer"
+                            data-value="{{ value |  downcase }}"
+                            data-option="{{ option.name |  downcase }}"
+                            for="{{ value }}_{{ section.id }}_{{ forloop.index0 }}">
+                            <input
+                              {% if option.selected_value == value %}
+                              checked
+                              {% endif %}
+                              class="hidden"
+                              name="options[{{ option.name |  escape }}]"
+                              data-forloop="{{ forloop.index0 }}"
+                              data-variant-option-value="{{ value |  downcase }}"
+                              id="{{ value }}_{{ section.id }}_{{ forloop.index0 }}"
+                              value="{{ value }}"
+                              type="radio">
+                            {% if option.name == 'Color' %}
+                              {% if value.swatch.image %}
+                                <img
+                                  src="{{ value.swatch.image |  image_url  }}"
+                                  class="w-[40px] h-[40px] rounded-full"
+                                  width=""
+                                  height=""
+                                  alt="">
+                              {% else %}
+                                <span style="background-color: {{ value.swatch.color  }};" class="w-[40px] h-[40px] rounded-full border-2 "></span>
+                              {% endif %}
+                            {% else %}
+                              <span class="badge-sm">{{ value }}</span>
+                            {% endif %}
+
+                          </label>
+                        {% endfor %}
+                      </div>
                     </div>
-                  </div>
-                </fieldset>
-              {% endfor %}
+                  </fieldset>
+                  <script type="application/json">
+                    {{ product.variants | json }}
+                  </script>
+                {% endfor %}
+              </div>
             </div>
           {%- endunless -%}
+
 
         {%- endform -%}
       </section>
