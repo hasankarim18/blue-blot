@@ -1,0 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_one": {
+      "type": "collection-one",
+      "blocks": {
+        "tag_filter": {
+          "type": "tag_filter",
+          "settings": {}
+        },
+        "other": {
+          "type": "other_filter",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "other",
+        "tag_filter"
+      ],
+      "settings": {
+        "collection_one_banner_image": "shopify:\/\/shop_images\/pexels-jose-martin-segura-benites-1422456152-27035625.jpg",
+        "add_to_cart_type": "api",
+        "number_of_products": 22
+      }
+    }
+  },
+  "order": [
+    "collection_one"
+  ]
+}
